@@ -125,11 +125,17 @@
             "pages": [
               {
                 "group": "SDKs",
-                "icon": "code",
+                "icon": "box-open",
                 "pages": [
                   "developer-resources/dodo-payments-sdks",
-                  "developer-resources/react-native-integration",
-                  "developer-resources/supabase-boilerplate"
+                  "developer-resources/sdks/typescript",
+                  "developer-resources/sdks/python",
+                  "developer-resources/sdks/php",
+                  "developer-resources/sdks/go",
+                  "developer-resources/sdks/ruby",
+                  "developer-resources/sdks/java",
+                  "developer-resources/sdks/csharp",
+                  "developer-resources/react-native-integration"
                 ]
               },
               {
@@ -177,7 +183,8 @@
                   "features/atlas-demo-website"
                 ]
               },
-              "developer-resources/mcp-server"
+              "developer-resources/mcp-server",
+              "developer-resources/supabase-boilerplate"
             ]
           },
           {
