@@ -133,6 +133,8 @@
                   "developer-resources/sdks/go",
                   "developer-resources/sdks/ruby",
                   "developer-resources/sdks/java",
+                  "developer-resources/sdks/kotlin",
+                  "developer-resources/sdks/cli",
                   "developer-resources/sdks/php",
                   "developer-resources/sdks/csharp",
                   "developer-resources/react-native-integration"

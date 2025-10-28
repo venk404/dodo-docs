@@ -11,7 +11,7 @@ Dodo Payments provides official SDKs for multiple programming languages, each de
 
 Choose the SDK that matches your tech stack:
 
-<CardGroup cols={3}>
+<CardGroup cols={2}>
 <Card title="TypeScript SDK" icon="js" href="/developer-resources/sdks/typescript">
   Type-safe integration for TypeScript and Node.js with promise-based API and auto-pagination
 </Card>
@@ -46,6 +46,10 @@ Choose the SDK that matches your tech stack:
 
 <Card title="React Native SDK" icon="mobile" href="/developer-resources/react-native-integration">
   Native mobile SDK for building secure payment experiences in iOS and Android apps
+</Card>
+
+<Card title="CLI" icon="terminal" href="/developer-resources/sdks/cli">
+  Command-line interface for interacting with the API from your terminal
 </Card>
 </CardGroup>
 
@@ -161,17 +165,36 @@ For mobile applications, we provide a dedicated React Native SDK:
 Apple Pay, Google Pay, Cash App, and UPI are not currently supported in the React Native SDK. Support for these payment methods is planned for future releases.
 </Info>
 
+## Command-Line Interface
+
+For terminal-based workflows and automation:
+
+<Card title="CLI" icon="terminal" href="/developer-resources/sdks/cli">
+  Auto-generated command-line interface with support for all 78 API endpoints
+</Card>
+
+**Features:**
+- Resource-based command structure for intuitive usage
+- Multiple output formats (JSON, YAML, pretty, interactive)
+- Shell completion for bash, zsh, and fish
+- Perfect for scripting and CI/CD automation
+
+```bash
+# Quick example
+dodopayments payments list --format json | jq '.data[] | {id, amount}'
+```
+
 ## Migration from Node.js SDK
 
 <Info>
 We migrated from the Node.js SDK to the new TypeScript SDK. If you're using the legacy Node.js SDK, see the [migration guide](https://github.com/dodopayments/dodopayments-typescript/blob/main/MIGRATION.md) to update your integration.
 </Info>
 
-### Framework Adapters
+## Framework Adapters
 
 Integrate in under 10 lines of code with our framework adapters. Choose from our recommended frameworks or explore all supported options.
 
-#### Recommended Frameworks
+### Recommended Frameworks
 
 <CardGroup cols={2}>
 <Card title="Next.js" icon="atom" href="/developer-resources/nextjs-adaptor">
