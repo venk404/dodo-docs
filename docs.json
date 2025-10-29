@@ -185,8 +185,17 @@
                   "features/atlas-demo-website"
                 ]
               },
-              "developer-resources/mcp-server",
-              "developer-resources/supabase-boilerplate"
+              {
+                "group": "Boilerplates",
+                "icon": "box-open",
+                "pages": [
+                  "developer-resources/supabase-boilerplate",
+                  "integrations/figma-plugin",
+                  "developer-resources/nextjs-boilerplate",
+                  "developer-resources/astro-boilerplate"
+                ]
+              },
+              "developer-resources/mcp-server"
             ]
           },
           {
@@ -449,7 +458,6 @@
               "integrations/introduction",
               "integrations/woocommerce-plugin",
               "integrations/framer-plugin",
-              "integrations/figma-plugin",
               "integrations/raycast-extension"
             ]
           },
