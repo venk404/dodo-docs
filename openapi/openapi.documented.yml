@@ -5,7 +5,7 @@ info:
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
-  version: 1.56.2
+  version: 1.56.3
 servers:
   - url: https://test.dodopayments.com/
     description: Test Mode Server Host
@@ -11351,6 +11351,9 @@ components:
           items:
             $ref: '#/components/schemas/PartialRefundItem'
           description: Partially Refund an Individual Item
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+          description: Additional metadata associated with the refund.
         payment_id:
           type: string
           description: The unique identifier of the payment to be refunded.
@@ -14024,6 +14027,7 @@ components:
         - eps
         - ideal
         - przelewy24
+        - paypal
         - affirm
         - klarna
         - sepa
@@ -14481,6 +14485,7 @@ components:
         - status
         - created_at
         - is_partial
+        - metadata
         - customer
       properties:
         amount:
@@ -14507,6 +14512,9 @@ components:
         is_partial:
           type: boolean
           description: If true the refund is a partial refund
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+          description: Additional metadata stored with the refund.
         payment_id:
           type: string
           description: The unique identifier of the payment associated with the refund.
@@ -16024,6 +16032,7 @@ webhooks:
                   name: Jane Doe
                   phone_number: null
                 is_partial: false
+                metadata: {}
                 payload_type: Refund
                 payment_id: pay_aTkzUDRuc7Rb3kVJXE17z
                 reason: Testing Refund failure
@@ -16090,6 +16099,7 @@ webhooks:
                   name: Jane Doe
                   phone_number: null
                 is_partial: false
+                metadata: {}
                 payload_type: Refund
                 payment_id: pay_aTkzUDRuc7Rb3kVJXE17z
                 reason: Testing success refund
