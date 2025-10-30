@@ -203,44 +203,39 @@ You will receive the **latest payload at the time of delivery**, regardless of w
 
 ## Securing Webhooks
 
-Security is critical when handling webhooks. Always verify webhook signatures and use HTTPS endpoints.
+To ensure the security of your webhooks, always validate the payloads and use HTTPS.
 
-### Signature Verification
+### Verifying Signatures
 
-Every webhook request includes a `webhook-signature` header—an HMAC SHA256 signature that proves the webhook came from Dodo Payments.
+Each webhook request includes a `webhook-signature` header, an HMAC SHA256 signature of the webhook payload and timestamp, signed with your secret key.
 
-<Steps>
-<Step title="Extract Headers">
-  Extract the following headers from the incoming webhook request:
-  - `webhook-id`: Unique event identifier
-  - `webhook-timestamp`: Unix timestamp when sent
-  - `webhook-signature`: HMAC SHA256 signature
-</Step>
+#### SDK verification (recommended)
 
-<Step title="Construct Signed Content">
-  Concatenate the `webhook-id`, `webhook-timestamp`, and stringified payload with periods (`.`):
-  
-  ```
-  {webhook-id}.{webhook-timestamp}.{stringified-payload}
-  ```
-</Step>
+All official SDKs include built‑in helpers to securely validate and parse incoming webhooks. Two methods are available:
 
-<Step title="Compute HMAC">
-  Calculate the HMAC SHA256 signature using your webhook secret key from the Dodo Payments dashboard.
-</Step>
+* `unwrap()`: Verifies signatures using your webhook secret key
+* `unsafe_unwrap()`: Parses payloads without verification
 
-<Step title="Compare Signatures">
-  Compare your computed signature with the received `webhook-signature` header. If they match, the webhook is authentic.
-</Step>
-</Steps>
+<Tip>
+  Provide your webhook secret via `DODO_PAYMENTS_WEBHOOK_KEY` when initializing the Dodo Payments client.
+</Tip>
+
+#### Manual verification (alternative)
+
+If you are not using an SDK, you can verify signatures yourself following the Standard Webhooks spec:
+
+1. Build the signed message by concatenating `webhook-id`, `webhook-timestamp`, and the exact raw stringified `payload`, separated by periods (`.`).
+2. Compute the HMAC SHA256 of that string using your webhook secret key from the Dashboard.
+3. Compare the computed signature to the `webhook-signature` header. If they match, the webhook is authentic.
 
 <Info>
-We follow the [Standard Webhooks](https://standardwebhooks.com/) specification. Use the official [Standard Webhooks libraries](https://github.com/standard-webhooks/standard-webhooks/tree/main/libraries) for automatic signature verification in your preferred language.
+  We follow the Standard Webhooks specification. You can use their libraries to verify signatures: [https://github.com/standard-webhooks/standard-webhooks/tree/main/libraries](https://github.com/standard-webhooks/standard-webhooks/tree/main/libraries). For event payload formats, see the [Webhook Payload](/developer-resources/webhooks/intents/payment).
 </Info>
 
-<Warning>
-**Never skip signature verification in production.** Without verification, malicious actors could send fake webhooks to your endpoint.
-</Warning>
+### Responding to Webhooks
+
+* Your webhook handler must return a `2xx status code` to acknowledge receipt of the event.
+* Any other response will be treated as a failure, and the webhook will be retried.
 
 ### Best Practices
 
@@ -271,43 +266,6 @@ We follow the [Standard Webhooks](https://standardwebhooks.com/) specification. 
   Store your webhook secret securely using environment variables or a secrets manager. Never commit secrets to version control.
 </Accordion>
 </AccordionGroup>
-
-### Response Codes
-
-Each webhook request includes a `webhook-signature` header, an HMAC SHA256 signature of the webhook payload and timestamp, signed with your secret key.
-
-#### SDK verification (recommended)
-
-All official SDKs include built‑in helpers to securely validate and parse incoming webhooks. Two methods are available:
-
-- `unwrap()`: Verifies signatures using your webhook secret key
-- `unsafe_unwrap()`: Parses payloads without verification
-
-<Tip>
-Provide your webhook secret via `DODO_PAYMENTS_WEBHOOK_KEY` when initializing the Dodo Payments client.
-</Tip>
-
-
-#### Manual verification (alternative)
-
-If you are not using an SDK, you can verify signatures yourself following the Standard Webhooks spec:
-
-1. Build the signed message by concatenating `webhook-id`, `webhook-timestamp`, and the exact raw stringified `payload`, separated by periods (`.`).
-2. Compute the HMAC SHA256 of that string using your webhook secret key from the Dashboard.
-3. Compare the computed signature to the `webhook-signature` header. If they match, the webhook is authentic.
-
-<Info>
-We follow the Standard Webhooks specification. You can use their libraries to verify signatures: https://github.com/standard-webhooks/standard-webhooks/tree/main/libraries. For event payload formats, see the [Webhook Payload](/developer-resources/webhooks/intents/payment).
-</Info>
-Your webhook endpoint must return the appropriate HTTP status code:
-
-<ResponseField name="2xx" type="Success">
-Webhook processed successfully. Any 2xx status code acknowledges receipt.
-</ResponseField>
-
-<ResponseField name="4xx/5xx" type="Failure">
-Any non-2xx response is treated as a delivery failure and triggers the retry mechanism.
-</ResponseField>
 
 ## Webhook Payload Structure
 
@@ -386,6 +344,10 @@ Event-specific payload containing detailed information about the event.
 ## Testing Webhooks
 
 You can test your webhook integration directly from the Dodo Payments dashboard to ensure your endpoint is working correctly before going live.
+
+<Frame>
+    <img src="/images/webhooks/endpoints.png" alt="Endpoint Details" />
+</Frame>
 
 ### Accessing the Testing Interface
 
@@ -635,9 +597,17 @@ Transformations are particularly useful for:
 
 The Logs tab provides comprehensive visibility into your webhook delivery status, allowing you to monitor, debug, and manage webhook events effectively.
 
+<Frame>
+    <img src="/images/webhooks/logs.png" alt="Logs" />
+</Frame>
+
 ## Activity Monitoring
 
 The Activity tab provides real-time insights into your webhook delivery performance with visual analytics.
+
+<Frame>
+    <img src="/images/webhooks/activity.png" alt="Activity" />
+</Frame>
 
 ## Deploy to Cloud Platforms
 
