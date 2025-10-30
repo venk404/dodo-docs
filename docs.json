@@ -89,8 +89,8 @@
                 "group": "Payouts and Balances",
                 "icon": "wallet",
                 "pages": [
-                  "features/account-summary-payout-wallet",
-                  "features/payouts/payout-structure"
+                  "features/payouts/payout-structure",
+                  "features/account-summary-payout-wallet"
                 ]
               },
               {

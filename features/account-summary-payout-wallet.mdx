@@ -1,47 +1,81 @@
 ---
-title: Balances & Payout Wallet
-description: Learn about the Balances and Payout Wallet features in Dodo Payments. This guide provides a comprehensive overview of transaction types, and amounts, as well as insights into managing your payout wallet for seamless financial operations.
+title: Balances
+description: Track your financial activity across multi-currency wallets with comprehensive transaction ledgers, including payments, refunds, fees, and payouts in USD, GBP, EUR, and INR.
 icon: "file-invoice-dollar"
 ---
 
-<Frame>
-<iframe 
-    className="w-full aspect-video rounded-md" 
-    src="https://www.youtube.com/embed/L62X_GQBmaQ"
-    title="Account Summary | Dodo Payments"
-    frameBorder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowFullScreen
-></iframe>
-</Frame>
-
 ## Introduction
 
-The **Balances** section offers a detailed breakdown of all financial transactions, including payments, refunds, payouts, transaction fees, and taxes. This ensures full visibility into the merchant's earnings and deductions.
+The **Balances** section provides merchants with a comprehensive overview of their financial activity across all currencies. It includes every transaction type - payments, refunds, fees, taxes, and payouts - ensuring full visibility into both earnings and deductions.
 
 ## Key Details
 
-1. **Transaction Types**
-    - **Payment (+)**: Successful payments (Credit).
-    - **Refund (-)**: Returned amounts (Debit).
-    - **Transaction Fees (-)**: Processing fees for payments (Debit).
-    - **Refund Fees (-)**: Transaction fees for refunds (Debit).
-    - **Sales Tax (-)**: Tax charged on payments (Debit).
-    - **Sales Tax Refund (+)**: Refunded sales tax on refunds (Credit).
-    - **Payout (-)**: Amount paid out to the merchant (Debit).
-    - **Payout Fees (-)**: Transaction fees associated with the payout (Debit).
-2. **Transaction Amount**: Total amount associated with the transaction.
-3. **Transaction Timestamp**: Timestamp of each transaction.
-4. **Transaction ID**: Unique identifier for easy tracking.
+<Frame>
+<img src="/images/balances.png" alt="Balances dashboard showing wallet overview and transaction ledger" />
+</Frame>
 
-## Payout Wallet
+## Wallet Structure
 
-The **Payout Wallet** provides merchants with a clear overview of their eligible earnings. This feature simplifies the payout process, offering transparency over financial disbursements. The wallet amount summarizes all the transactions in the account summary and displays the amount eligible for the next payout cycle.
+Each business account maintains **four native wallets** based on supported payout currencies:
 
-<Info>
-You can now modify your minimum payout threshold directly from your Payout Wallet settings. The minimum threshold you can set is $50. Adjusting this allows you to control when payouts are triggered based on your business needs.
-</Info>
+| Wallet | Currency Code |
+| --- | --- |
+| USD Wallet | USD |
+| GBP Wallet | GBP |
+| EUR Wallet | EUR |
+| INR Wallet | INR |
+
+### Wallet Logic
+
+- Merchant sales are **credited to the appropriate wallet** based on the **customer's payment currency** and **geographic location**.
+- This system optimizes for **payment processor efficiency**, **reduced transaction fees** and **lower currency conversion charges**.
+
+## Balance Ledger
+
+Each wallet has an **independent ledger** recording all related financial activity - payments, refunds, fees, and payouts - in that specific wallet's currency.
+
+A **Consolidated Ledger** combines all wallet data, offering a unified view of the merchant's entire financial history.
+
+### Filters and Navigation
+
+- **Currency Filter:** Allows merchants to view transactions by specific wallet (USD, INR, GBP, EUR).
+- **All Transactions View:** Provides an aggregated view across all wallets with unified sorting, filtering, and search capabilities.
+
+### Transaction Types
+
+The following transaction types are recorded in the Balance ledger:
+
+| Transaction Type | Symbol | Description |
+| --- | --- | --- |
+| **Payment** | Credit (+) | Successful customer payment |
+| **Refund** | Debit (-) | Returned amount to the customer |
+| **Transaction Fees** | Debit (-) | Processing fees applied to payments |
+| **Refund Fees** | Debit (-) | Fees deducted for processing refunds |
+| **Sales Tax** | Debit (-) | Tax amount charged on payments |
+| **Sales Tax Refund** | Credit (+) | Refunded portion of sales tax on refunds |
+| **Payout** | Debit (-) | Amount transferred to the merchant's bank account |
+| **Payout Fees** | Debit (-) | Transaction fees deducted from payouts |
+
+#### Additional Fields
+
+- **Transaction Amount:** Total value associated with the transaction.
+- **Transaction Timestamp:** Date and time of transaction completion.
+- **Transaction ID:** Unique identifier for tracking and support purposes.
+
+## Total Balance
+
+The **Total Balance** section shows a **consolidated indicative amount** of all wallet balances - **USD, GBP, and EUR** - after conversion to USD.
+
+<Note>
+**Indicative Display:** The displayed amount is **for reference only**. Final payout amounts may vary based on the actual exchange rate at the time of transfer.
+</Note>
 
 ## Conclusion
 
-Both the **Payout Wallet** and **Account Summary** features streamline financial operations for merchants, offering transparency. These tools ensure a seamless payout experience and accurate transaction tracking, vital for effective financial management. In case of any discrepancy noticed in the transactions, please reach out to us at [support@dodopayments.com](mailto:support@dodopayments.com) with the transaction ID and issue.
+The **Balances** aims to deliver **transparency, accuracy, and flexibility** in managing multi-currency funds.
+
+By maintaining separate native wallets, providing currency-based filters, and enabling indicative consolidated views, Dodo Payments ensures merchants always have a clear understanding of their earnings and payout readiness.
+
+<Tip>
+For any discrepancies or clarifications, please reach out to **support@dodopayments.com** with your **Transaction ID** and issue details.
+</Tip>

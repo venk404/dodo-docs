@@ -1,37 +1,66 @@
 ---
-title: Payout Process
-description: The Payout process will be via Bank Transfer.
+title: Payouts
+description: Consolidate your eligible earnings and manage your payout threshold directly from the dashboard.
 icon: "money-bill"
 ---
 
+## Introduction
+
+The **Payouts Section** consolidates all eligible earnings that can be disbursed in the next payout cycle. It provides transparency on the net available balance after accounting for all fees, refunds, and taxes.
+
+<Frame>
+  <img src="/images/payouts/payout-section.png" alt="Payouts section showing balance eligible for payout" />
+</Frame>
+
+## Key Features
+
+- Displays the total balance eligible for payout in the upcoming cycle in USD
+- Automatically applies FX conversion for non-USD currencies
+- Lets businesses **set or modify their payout threshold** directly from the wallet settings
+
+<Info>
+The displayed amount is **for reference only**. Final payout amounts may vary based on the actual exchange rate at the time of transfer.
+</Info>
+
+
 ## Payout Cycles
 
-We support the following Payout cycles: 
+We support the following payout cycles:
 
-1. **Monthly**
-    - **Billing Period:** 1st to the end of the month
-    - **Payout Date:** 11th of the following month
-2. **Bi-Monthly (Default)**
-    - **Billing Period 1:** 1st to 15th of the month
-    - **Payout Date 1:** 18th of the same month
-    - **Billing Period 2:** 16th to the end of the month
-    - **Payout Date 2:** 4th of the following month
-3. **Weekly**
-    - **Billing Period 1:** 1st to 7th
-        - **Payout Date 1:** 11th of the same month
-    - **Billing Period 2:** 8th to 14th
-        - **Payout Date 2:** 18th of the same month
-    - **Billing Period 3:** 15th to 21st
-        - **Payout Date 3:** 25th of the same month
-    - **Billing Period 4:** 22nd to the End of the month
-        - **Payout Date 4:** 4th of the following month
+<Steps>
+<Step title="Bi-Monthly (Default)">
+**Billing Period 1:** 1st to 15th of the month  
+**Payout Date 1:** 18th of the same month
 
-> **Note:**
-> 
-> - Payouts will only be initiated if all verifications are successful and Payout Threshold is crossed in the billing period.
-> - The default payout cycle for all merchants is **bi-monthly**.
-> - Merchants with higher transaction volumes may request **weekly** payouts by contacting support@dodopayments.com.
-> - Certain high-risk merchants may be placed on a **monthly** payout cycle at our discretion.
+**Billing Period 2:** 16th to the end of the month  
+**Payout Date 2:** 4th of the following month
+</Step>
+
+<Step title="Weekly">
+**Billing Period 1:** 1st to 7th  
+**Payout Date 1:** 11th of the same month
+
+**Billing Period 2:** 8th to 14th  
+**Payout Date 2:** 18th of the same month
+
+**Billing Period 3:** 15th to 21st  
+**Payout Date 3:** 25th of the same month
+
+**Billing Period 4:** 22nd to the end of the month  
+**Payout Date 4:** 4th of the following month
+</Step>
+
+<Step title="Monthly">
+**Billing Period:** 1st to the end of the month  
+**Payout Date:** 11th of the following month
+</Step>
+</Steps>
+
+**Note:**
+- Payouts will only be initiated if all verifications are successful and Payout Threshold is crossed in the billing period.
+- The default payout cycle for all businesses is **bi-monthly**.
+- Businesses with higher transaction volumes may request **weekly** payouts by contacting [support@dodopayments.com](mailto:support@dodopayments.com).
+- Certain high-risk businesses may be placed on a **monthly** payout cycle at our discretion.
 
 ## Payout Processing and Bank Timelines
 
@@ -39,76 +68,102 @@ We support the following Payout cycles:
 2. It typically takes **1-2 business days** for the amount to appear in your bank account.
 3. Delays may occur if payout processing dates fall on weekends or bank holidays.
 
-## Payout Currency
-
-1. The default payout currency is **USD**.
-2. For **Indian merchants**, the payout currency for domestic transactions only is **INR**. You can see the bifurcation on your dashboard in the Payouts section.
-3. For custom currency requirements, please reach out to our team at support@dodopayments.com.
-
 ## Minimum Payout Threshold
 
-1. **USD Payouts:** $100
-2. **INR Payouts (India):** INR 1000
+| Currency | Minimum Threshold |
+|----------|------------------|
+| USD      | $50              |
+| INR      | ₹1,000           |
 
+<Info>
 If your balance does not meet the threshold, it will carry forward to the next payout cycle.
+</Info>
 
-### Flexible Minimum Payout Threshold
+## Flexible Minimum Payout Threshold
 
-**Introduction**
+You can customize the balance that must build up in your USD wallet before Dodo Payments triggers a payout.
 
-You can now set the balance that must build up in your USD wallet before Dodo Payments triggers a payout.
+**Configuration:**
+- **Allowed values:** $50 or any higher amount
+- **Effective from:** Your current payout cycle
+- **Note:** Payouts already scheduled (if entry is created in the payout table) remain unchanged
 
-- Allowed values: $100 **or any higher amount**
-- Takes effect from **your current payout cycle**; payouts already scheduled (If entry is created in the payout table) stay unchanged.
-
-**Edit in Dashboard**
+### How to Edit Your Threshold
 
 <Frame>
-  <img src="/images/payouts/payout-process/payout-threshold.png" />
+  <img src="/images/payouts/payout-threshold-edit.png" alt="Edit payout threshold in dashboard" />
 </Frame>
 
-1. **Settings → Payouts → Minimum Threshold**
-2. Choose edit threshold and enter a number **≥ 100** (e.g., “250”).
-3. Click **Confirm.**
-4. You will see the updated amount in the Minimum Payout Threshold field
+<Steps>
+<Step title="Navigate to Payout Settings">
+Go to **Payouts → Payouts Page → Minimum Threshold**
+</Step>
 
-**Note: This feature is only applicable to the USD Wallet as of now. The INR wallet will have no changes**
+<Step title="Enter New Threshold">
+Choose edit threshold and enter a number **≥ 50** (e.g., "250")
+</Step>
+
+<Step title="Confirm Changes">
+Click **Confirm** to save your new threshold
+</Step>
+
+<Step title="Verify Update">
+You will see the updated amount in the Minimum Payout Threshold field
+</Step>
+</Steps>
+
+<Note>
+This feature is only applicable to the USD/EUR/GBP Wallet as of now. The INR wallet will have no changes.
+</Note>
 
 ## Payout Deductions
 
-1. **Taxes** : All applicable taxes as per the Tax Calculator will be deducted from the sales amount before payout
-2. **Dodo Payment Fees and Payout Fees** will be deducted before sending the payout. For details check out our [**Pricing Page**](https://docs.dodopayments.com/miscellaneous/pricing-and-fee-structure)
+The following amounts are deducted from your sales before payout:
 
-## **Payout Status**
+**Taxes:**
+All applicable taxes as per the Tax Calculator will be deducted from the sales amount before payout.
 
-| Payout Status        | Description                                                                              |
-| -------------------- | ---------------------------------------------------------------------------------------- |
-| Payout Not Initiated | Payout due date has not yet arrived hence it has not been initiated                      |
-| Payout In Progress   | Payout due date has arrived and Payout is in progress                                    |
-| Payout On Hold       | Payout is put on hold by the Payout Team (By Backend until admin dashboard is available) |
-| Payout Successful    | Payout to the merchant account is processed successfully                                 |
-| Payout Failed        | Payout to the merchant account has failed                                                |
+**Fees:**
+Dodo Payment Fees and Payout Fees will be deducted before sending the payout.
 
+<Tip>
+For detailed fee information, check out our [Pricing Page](https://dodopayments.com/pricing).
+</Tip>
+
+## Payout Status
+
+Track the progress of your payouts through the following status indicators:
+
+| Status               | Description                                                                              |
+|----------------------|------------------------------------------------------------------------------------------|
+| Not Initiated        | Payout due date has not yet arrived hence it has not been initiated                      |
+| In Progress          | Payout due date has arrived and payout is in progress                                    |
+| On Hold              | Payout is put on hold by the Payout Team (by backend until admin dashboard is available) |
+| Successful           | Payout to the business account is processed successfully                                 |
+| Failed               | Payout to the business account has failed                                                |
 
 ## Payout Invoice
 
-A reverse invoice will be generated to indicate the amount paid by Dodo Payments to the Merchant
+A reverse invoice is generated to indicate the amount paid by Dodo Payments to the business.
 
-### Payout Invoice Structure
+### Invoice Structure
 
-  <Frame>
-    <img src="/images/payouts/payout-process/Invoice - Payout.png" />
-  </Frame>
-| Information                    | Description                                                                                   |
-| ------------------------------ | --------------------------------------------------------------------------------------------- |
-| Invoice ID                     | A Unique ID of the Invoice generated                                                          |
-| Date of Issue                  | Datetime of the Invoice Issued                                                                |
-| Merchant Business Name         | Registered Business Name of the Merchant                                                      |
-| Merchant Business Address      | Registered Business Address of the Merchant                                                   |
-| Dodo Merchant Name             | Registered Business Name of Dodo Payments                                                     |
-| Dodo Payments Company ID       | Registered Company ID of Dodo Payments                                                        |
-| Dodo Payments Business Address | Registered Business Address of Dodo Payments                                                  |
-| Payout Name                    | Name given to the payout (Eg. November Payout for Digital services licensed to Dodo Payments) |
-| Payout Qty                     | Will be 1                                                                                     |
-| Payout Unit Price              | Total Amount to be paid                                                                       |
-| Payout Amount                  | Total Amount to be paid                                                                       |
+<Frame>
+  <img src="/images/payouts/payout-process/Invoice - Payout.png" alt="Payout invoice structure example" width="60%" />
+</Frame>
+
+## Important Disclaimer for Indian Businesses
+
+- **INR Payouts to businesses in India are handled independently** and are **not part of the consolidated USD/GBP/EUR payout cycle**.  
+- Businesses with Indian bank accounts will receive **two separate payouts** per cycle:
+  - One for INR Wallet (domestic payout)
+  - One for global currencies (USD/GBP/EUR consolidated payout)
+- Each payout will generate a separate invoice and entry in the balance ledger.
+
+<Card
+  title="Balances & Wallets"
+  icon="file-invoice-dollar"
+  href="/account-summary-payout-wallet"
+>
+  Get a comprehensive overview of all your USD, GBP, EUR, and INR wallet balances, transaction ledgers, and payout-related financial activity.
+</Card>
