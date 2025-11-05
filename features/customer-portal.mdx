@@ -43,12 +43,19 @@ Customers can reach the portal using either a static link or a one‑time dynami
 
 Customers can request portal access by entering their email at a static link that never expires. 
 
-The static portal link format is:
+The static portal link format varies by environment:
 
+**Test Mode** (for testing and development):
 ```bash
 https://test.customer.dodopayments.com/login/{business_id}
 ```
-Replace `{business_id}` with your actual business identifier, then share this link with customers so they can enter their email and receive secure access to the portal.
+
+**Live Mode** (for production with real transactions):
+```bash
+https://customer.dodopayments.com/login/{business_id}
+```
+
+Replace `{business_id}` with your actual business identifier, then share the appropriate link with customers so they can enter their email and receive secure access to the portal.
 
 
 <Steps>
