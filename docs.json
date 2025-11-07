@@ -113,6 +113,7 @@
                   "features/purchasing-power-parity"
                 ]
               },
+              "features/payment-methods",
               "features/adaptive-currency",
               "features/analytics-and-reporting",
               "features/storefront",
@@ -213,7 +214,6 @@
             "group": "Merchant of Record",
             "pages": [
               "miscellaneous/verification-process",
-              "features/payment-methods",
               "miscellaneous/list-of-countries-we-accept-payments-from",
               "miscellaneous/merchant-acceptance",
               "miscellaneous/review-monitoring-policy",

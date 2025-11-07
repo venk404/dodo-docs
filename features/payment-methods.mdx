@@ -1,6 +1,6 @@
 ---
-title: Accepted Payment Methods
-description: Complete guide to payment methods supported by Dodo Payments, including credit/debit cards, digital wallets, BNPL, UPI/Rupay, European options, and how to configure them for your checkout.
+title: Payment Methods
+description: Complete guide to payment methods supported by Dodo Payments, including credit/debit cards, digital wallets, BNPL, Paypal, UPI/Rupay, European options, and how to configure them for your checkout.
 icon: "credit-card"
 ---
 
@@ -22,14 +22,15 @@ The following table provides a quick reference for all available payment methods
 | **Google Pay**           | Global (Excl. IN)    | All currencies       | Yes                  |
 | **Amazon Pay**           | Global (Excl. IN)    | USD                  | No                   |
 | **Cash App Pay**         | US                   | USD                  | No                   |
-| **Afterpay (BNPL)**      | US                   | USD                  | No                   |
-| **Klarna (BNPL)**        | US                   | USD                  | No                   |
-| **UPI**                  | India                | INR                  | No                   |
-| **Rupay (Credit/Debit)** | India                | INR                  | No                   |
+| **Afterpay (BNPL)**      | US, UK               | USD, GBP             | No                   |
+| **Klarna (BNPL)**        | US, Europe*          | USD, EUR, GBP, DKK, NOK, SEK, CZK, RON, PLN, CHF | No                   |
+| **PayPal**               | Global               | EUR, GBP             | No                   |
+| **UPI**                  | India                | INR                  | Yes*                 |
+| **Rupay (Credit/Debit)** | India                | INR                  | Yes*                 |
 | **Bancontact**           | Belgium              | EUR                  | No                   |
 | **EPS**                  | Austria              | EUR                  | No                   |
 | **iDEAL**                | Netherlands          | EUR                  | No                   |
-| **Przelewy24 (P24)**     | Poland               | EUR                  | No                   |
+| **Multibanco**           | Portugal             | EUR                  | No                   |
 
 <Note>
 Each transaction must meet the <strong>minimum amount required for each currency</strong>. For USD, the minimum is <strong>0.50 USD</strong>. Minimums for other currencies vary by region.
@@ -37,7 +38,13 @@ Each transaction must meet the <strong>minimum amount required for each currency
 </Note>
 
 <Note>
-Klarna and Afterpay require a minimum transaction amount of <strong>50.01 USD</strong> for eligibility at checkout. Transactions below this threshold will not be eligible for these BNPL payment options.
+Klarna and Afterpay require a minimum transaction amount of <strong>50.01 USD</strong> (or equivalent in supported currencies) for eligibility at checkout. Transactions below this threshold will not be eligible for these BNPL payment options. 
+
+For details on Klarna's supported countries, refer to the <a href="#buy-now-pay-later-bnpl">BNPL section</a> below.
+</Note>
+
+<Note>
+<strong>Indian Payment Methods:</strong> UPI and Rupay subscriptions are supported with RBI-compliant mandates. See the <a href="#upi-and-rupay-india">UPI and Rupay section</a> for important details about one-time payment restrictions, mandate limits, and processing delays.
 </Note>
 
 ## Payment Method Details
@@ -45,9 +52,6 @@ Klarna and Afterpay require a minimum transaction amount of <strong>50.01 USD</s
 <AccordionGroup>
 
 <Accordion title="Credit and Debit Cards">
-  <Frame>
-    <img alt="Accepted Card Brands" src="/images/transactions/payments/cards.png" />
-  </Frame>
   Dodo Payments accepts all major credit and debit card networks globally. You can accept:
 
   - **Visa** – Reliable, widely accepted global network
@@ -56,58 +60,103 @@ Klarna and Afterpay require a minimum transaction amount of <strong>50.01 USD</s
   - **Discover** – Competitive rewards, strong US presence
   - **JCB** – Leading Asian card network with expanding reach
   - **UnionPay** – Dominant in China and Asia, with growing global acceptance
-  - **Interac** – Canada’s secure debit payment network
+  - **Interac** – Canada's secure debit payment network
   - **Cartes Bancaires** – Widely used across France
   - **Diners Club** – Premium international card with exclusive benefits
+  - **Korean Local Cards** – Support for Korean domestic card networks
 </Accordion>
 
 <Accordion title="Digital Wallets">
-  <Frame>
-    <img alt="Supported Digital Wallets" src="/images/transactions/payments/wallet_supported.png" />
-  </Frame>
   Offer customers a fast and secure checkout using digital wallets:
 
   - **Apple Pay** – Pay easily on iOS, macOS, and watchOS
   - **Google Pay** – Secure payments on Android, web, and in-store
+  - **PayPal** – Global payments in EUR and GBP (not available for subscriptions)
   - **Cash App Pay** – Mobile payments for US customers (not available for subscriptions)
   - **Amazon Pay** – Use Amazon credentials for a simple checkout (not available for subscriptions)
 </Accordion>
 
 <Accordion title="Buy Now Pay Later (BNPL)">
-  <Frame>
-    <img alt="Supported BNPL Methods" src="/images/transactions/payments/bnpl_supported.png" />
-  </Frame>
   Increase conversion by offering flexible installment options:
 
-  - **Klarna** – Offers pay in 4, pay in 30 days, and financing (strong North American coverage)
-  - **Afterpay** – Split purchases into four interest-free payments (simple, transparent experience)
+  - **Klarna** – Enable flexible payments with Klarna’s options: pay in 4 installments, pay in 30 days, or finance your purchase. Klarna is available in the US and 19 European countries, including Austria, Belgium, Czech Republic, Denmark, Finland, France, Germany, Greece, Ireland, Italy, Netherlands, Norway, Poland, Portugal, Romania, Spain, Sweden, Switzerland, and the United Kingdom. Supported currencies include USD, EUR, GBP, DKK, NOK, SEK, CZK, RON, PLN, and CHF.
+  - **Afterpay** – Allow customers to split purchases into four interest-free payments. Afterpay is available in the US and UK, supporting payments in USD and GBP.
 </Accordion>
 
-<Accordion title="UPI and Rupay (India)">
-  <Frame>
-    <img alt="Supported Indian Payment Methods" src="/images/transactions/payments/indian-methods.png" />
-  </Frame>
+<Accordion title="UPI and Rupay (India)" id="upi-and-rupay-india">
   Accept leading Indian payment options:
 
   - **UPI** – Customers scan a QR code or use apps (Google Pay, PhonePe, Paytm, CRED) for instant, contactless bank transfers
-  - **Rupay Cards** – Secure credit and debit payments via India’s domestic card network
+  - **Rupay Cards** – Secure credit and debit payments via India's domestic card network
+
+  ### Subscriptions with RBI-Compliant Mandates
+
+  UPI and Indian card subscriptions operate under RBI (Reserve Bank of India) regulations with specific mandate requirements:
+
+  #### Mandate Limits
+
+  The mandate type and amount depend on your subscription's recurring charge:
+
+  - **Charges below ₹15,000:** We create an on-demand mandate for ₹15,000 INR. The subscription amount is charged periodically according to your subscription frequency, up to the mandate limit.
+  - **Charges ₹15,000 or above:** We create a subscription mandate (or on-demand mandate) for the exact subscription amount.
+
+  #### Upgrade and Downgrade Considerations
+
+  <Warning>
+  **Important:** When upgrading or downgrading subscriptions, carefully consider the mandate limits:
+
+  - If an upgrade/downgrade results in a charge amount that exceeds ₹15,000 and goes beyond the existing on-demand payment limit, the transaction charge may fail.
+  - In such cases, the customer may need to update their payment method or change the subscription again to establish a new mandate with the correct limit.
+  </Warning>
+
+  #### Authorization for High-Value Charges
+
+  For subscription charges of ₹15,000 or more:
+
+  - The customer will be prompted by their bank to authorize the transaction.
+  - If the customer fails to authorize the transaction, the transaction will fail and the subscription will be put on hold.
+
+  #### 48-Hour Processing Delay
+
+  <Info>
+  **Processing Timeline:** Recurring charges on Indian cards and UPI subscriptions follow a unique processing pattern:
+
+  - Charges are **initiated** on the scheduled date according to your subscription frequency.
+  - The actual **deduction** from the customer's account occurs only after **48 hours** from payment initiation.
+  - This 48-hour window may extend up to **2-3 additional hours** depending on bank API responses.
+  </Info>
+
+  #### Mandate Cancellation Window
+
+  During the 48-hour processing window:
+
+  - Customers can cancel the mandate via their banking apps.
+  - If a customer cancels the mandate during this period, the subscription will remain **active** (this is an edge case specific to Indian card and UPI AutoPay subscriptions).
+  - However, the actual deduction may fail, and in that case, we will put the subscription **on hold**.
+
+  <Warning>
+  **Edge Case Handling:** If you provide benefits, credits, or subscription usage to customers immediately upon charge initiation, you need to handle this 48-hour window appropriately in your application. Consider:
+
+  - Delaying benefit activation until payment confirmation
+  - Implementing grace periods or temporary access
+  - Monitoring subscription status for mandate cancellations
+  - Handling subscription hold states in your application logic
+  </Warning>
+
+  <Tip>
+  Monitor subscription webhooks to track payment status changes and handle edge cases where mandates are cancelled during the 48-hour window.
+  </Tip>
 
 </Accordion>
 
 <Accordion title="European Payment Methods">
-  <Frame>
-    <img alt="Supported European Payment Methods" src="/images/transactions/payments/european.png" />
-  </Frame>
   Offer localized European options to increase conversions:
 
   - **iDEAL** (Netherlands) – Instant Dutch online bank payments
-  - **Bancontact** (Belgium) – Belgium’s trusted debit card method
-  - **Przelewy24 (P24)** (Poland) – Polish platform for bank transfers and multi-option checkout
+  - **Bancontact** (Belgium) – Belgium's trusted debit card method
+  - **Multibanco** (Portugal) – Portuguese payment method for bank transfers and ATM payments
   - **EPS** (Austria) – Direct online banking payments in Austria
 
-  <Note>
-  European payment methods are currently available for one-time EUR payments only. Subscription support is not yet available.
-  </Note>
 </Accordion>
 
 </AccordionGroup>
@@ -273,6 +322,26 @@ Adding a payment method to `allowed_payment_method_types` doesn't guarantee it w
 - Your merchant account may not be enabled for that specific payment method
 
 **Solution:** Verify regional and currency compatibility, and contact support if you believe the method should be available.
+</Accordion>
+
+<Accordion title="Indian payment method subscription issues">
+**Subscription charge failed after upgrade/downgrade:**
+- The new charge amount may exceed the existing mandate limit (₹15,000 threshold)
+- Customer may need to update their payment method to establish a new mandate
+
+**Solution:** Prompt the customer to update their payment method or adjust the subscription amount to stay within mandate limits.
+
+**Subscription on hold after charge initiation:**
+- Customer may have cancelled the mandate during the 48-hour processing window
+- Customer may have failed to authorize a high-value charge (≥₹15,000)
+
+**Solution:** Monitor webhook events for mandate cancellations and payment failures. Implement retry logic or prompt customers to re-establish their payment method.
+
+**Payment deduction delayed:**
+- Normal behavior: Indian card and UPI subscriptions have a 48-hour delay between charge initiation and actual deduction
+- This delay may extend up to 2-3 additional hours depending on bank APIs
+
+**Solution:** This is expected behavior. Do not activate benefits or credits until payment confirmation is received via webhooks.
 </Accordion>
 </AccordionGroup>
 
