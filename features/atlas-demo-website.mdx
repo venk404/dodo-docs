@@ -1,79 +1,169 @@
 ---
 title: Atlas Demo Product
-description: Atlas is a fully functional demo application by Dodo Payments showcasing an AI art generation platform. It demonstrates all three billing models - **usage-based billing**, **one-time payments**, and **subscriptions** - with both **overlay** and **redirect checkout** options.
+description: Explore Atlas, a fully functional AI art generation demo application showcasing usage-based billing, subscriptions, and one-time payments with Dodo Payments checkout integration.
 icon: "palette"
 ---
 
 <Frame>
-  <img alt="Atlas Demo Product" src="/images/atlas/atlas-demo-product.png" />
+  <img alt="Atlas Demo Product - AI art generation platform with integrated billing" src="/images/atlas/atlas-demo-product.png" />
 </Frame>
-**Key Points**:
 
-- **URL**: [atlas.dodopayments.com](https://atlas.dodopayments.com/)
-- This is an **AI art generation demo** - users generate images from text prompts
-- **Three separate flows** are demonstrated:
-    1. **Usage-Based Billing Flow** (Pay per image - $0.75)
-    2. **Subscription Product Flow** (Unlimited Pro - $20/month)
-    3. **One-Time Purchase Flow** (Credit packs - $7 for 10 credits)
-- After completing a purchase, users are redirected to the **Atlas Studio dashboard** where they can generate artwork and track their usage.
+Atlas is a fully functional demo application by Dodo Payments that showcases an AI art generation platform. It demonstrates all three billing models—**usage-based billing**, **one-time payments**, and **subscriptions**—with integrated checkout flows.
+
+<Info>
+**Live Demo**: Visit [atlas.dodopayments.com](https://atlas.dodopayments.com/) to explore the platform and test all billing flows.
+</Info>
+
+## Overview
+
+Atlas simulates a real-world AI art generation platform where users create images from text prompts. The demo highlights three distinct purchase flows, each demonstrating different billing models and checkout experiences:
+
+- **Usage-Based Billing**: Pay per image generated ($0.75 per image)
+- **Subscription**: Unlimited Pro plan ($20/month)
+- **One-Time Purchase**: Credit packs ($7 for 10 credits)
+
+After completing any purchase, users are redirected to the **Atlas Studio dashboard** where they can generate artwork and track their usage in real-time.
 
 ## Purchase Flows
 
-### Usage-Based Billing Flow
+Atlas demonstrates three separate billing flows. Each flow follows a similar pattern but showcases different checkout experiences and billing models.
 
-1. **Select Usage-Based Pricing**: Choose the **pay-per-image** option ($0.75 per image) for AI art generation.
-2. **Generate Artwork**: Enter a prompt and generate an image. The system tracks usage automatically.
-3. **Checkout**:
-    - The user proceeds to Dodo Payments' **usage-based billing checkout** page with Merchant brand name and logo visible.
-    - User details and billing address have to be entered and post confirmation, taxes are calculated and total amount and payment details are displayed
-    - Enter test card details and make a payment to simulate transaction
-4. **Payment Confirmation**: Post-payment, Atlas displays a **confirmation** with usage details and remaining credits.
-5. **Dashboard Redirect**: Users are redirected back to the **Atlas Studio dashboard** where they can continue generating artwork and see their usage tracking.
+<Tabs>
+<Tab title="Usage-Based Billing">
 
-### Subscription Flow
+<Steps>
+<Step title="Select pay-per-image pricing">
+Choose the **pay-per-image** option ($0.75 per image) for AI art generation. This demonstrates usage-based billing where customers pay only for what they consume.
+</Step>
 
-1. **Select a Subscription Product**: Choose a monthly or annual plan for **Unlimited Pro** subscription ($20/month).
-2. **Generate Artwork**: Enter a prompt and generate an image. The system tracks usage automatically.
-3. **Checkout**:
-    - The user proceeds to Dodo Payments' **subscription checkout** page with Merchant brand name and logo visible.
-    - User details and billing address have to be entered and post confirmation, taxes are calculated and total amount and payment details are displayed
-    - Enter test card details and make a payment to simulate transaction
-4. **Payment Confirmation**: Post-payment, Atlas displays a **confirmation** with subscription details.
-5. **Dashboard Redirect**: Users are redirected back to the **Atlas Studio dashboard** with unlimited access to generate artwork.
+<Step title="Generate artwork">
+Enter a text prompt and generate an image. The system automatically tracks usage for billing purposes.
+</Step>
 
-### One-Time Purchase Flow
+<Step title="Complete checkout">
+The checkout process includes:
 
-1. **Select One-Time Purchase Option**: Choose a **Credit Pack** ($7 for 10 credits) for AI art generation.
-2. **Generate Artwork**: Enter a prompt and generate an image. The system tracks usage automatically.
-3. **Checkout**:
-    - The user is taken to the **one-time purchase** checkout flow powered by Dodo Payments with Merchant branding visible.
-    - User details and billing address have to be entered and post confirmation, taxes are calculated and total amount and payment details are displayed
-    - Enter test card details and make a payment to simulate transaction
-4. **Payment Confirmation**: Post-payment, Atlas displays a **confirmation** and user sees a "thank you" screen.
-5. **Dashboard Redirect**: Users are redirected back to the **Atlas Studio dashboard** where their purchased credits are available for generating artwork.
+- **Branded checkout page**: Dodo Payments checkout page displays your merchant brand name and logo
+- **Customer information**: Enter user details and billing address
+- **Tax calculation**: Taxes are automatically calculated after address confirmation
+- **Payment**: Enter test card details to complete the transaction
+
+<Tip>
+Use test card `4242 4242 4242 4242` with any future expiry date and CVC to simulate successful transactions.
+</Tip>
+</Step>
+
+<Step title="View confirmation">
+After payment, Atlas displays a confirmation screen with usage details and remaining credits.
+</Step>
+
+<Step title="Access dashboard">
+Users are redirected back to the **Atlas Studio dashboard** where they can continue generating artwork and monitor their usage tracking.
+</Step>
+</Steps>
+
+</Tab>
+
+<Tab title="Subscription">
+
+<Steps>
+<Step title="Select subscription plan">
+Choose the **Unlimited Pro** subscription plan ($20/month) for unlimited AI art generation.
+</Step>
+
+<Step title="Generate artwork">
+Enter a prompt and generate an image to test the platform before subscribing.
+</Step>
+
+<Step title="Complete checkout">
+The subscription checkout includes:
+
+- **Branded checkout page**: Merchant branding is visible throughout the checkout process
+- **Customer information**: Enter user details and billing address
+- **Tax calculation**: Automatic tax calculation based on billing address
+- **Payment**: Enter test card details to activate the subscription
+
+<Note>
+Subscriptions automatically renew monthly. Users can manage their subscription from the dashboard after purchase.
+</Note>
+</Step>
+
+<Step title="View confirmation">
+Post-payment, Atlas displays a confirmation screen with subscription activation details and next billing date.
+</Step>
+
+<Step title="Access dashboard">
+Users are redirected to the **Atlas Studio dashboard** with unlimited access to generate artwork.
+</Step>
+</Steps>
+
+</Tab>
+
+<Tab title="One-Time Purchase">
+
+<Steps>
+<Step title="Select credit pack">
+Choose a **Credit Pack** ($7 for 10 credits) for AI art generation. This demonstrates one-time purchase transactions.
+</Step>
+
+<Step title="Generate artwork">
+Enter a prompt and generate an image to preview the platform before purchasing credits.
+</Step>
+
+<Step title="Complete checkout">
+The one-time purchase checkout includes:
+
+- **Branded checkout page**: Dodo Payments checkout with merchant branding
+- **Customer information**: Enter user details and billing address
+- **Tax calculation**: Automatic tax calculation after address confirmation
+- **Payment**: Enter test card details to complete the purchase
+</Step>
+
+<Step title="View confirmation">
+Post-payment, Atlas displays a confirmation screen with a "thank you" message and purchased credit details.
+</Step>
+
+<Step title="Access dashboard">
+Users are redirected to the **Atlas Studio dashboard** where their purchased credits are immediately available for generating artwork.
+</Step>
+</Steps>
+
+</Tab>
+</Tabs>
 
 ## Post-Purchase Dashboard Experience
 
-One highlight of the Atlas demo is that it **tracks billing and usage** for the AI art generation platform:
+The Atlas Studio dashboard demonstrates how to implement billing-aware features and entitlement tracking after checkout completion.
 
-- **Dashboard Overview**: After completing a purchase, users are redirected to the **Atlas Studio dashboard** where they can immediately start generating artwork.
-- **Usage Tracking**: The dashboard displays **remaining credits**, **active subscriptions**, and **generation history**, demonstrating how to implement billing-aware features.
-- **Checkout Integration**: This showcases how merchants can integrate Dodo Payments' checkout flows and redirect users back to their application with proper entitlement tracking.
+### Dashboard Features
 
-## Technical Integration Steps
+- **Immediate access**: Users can start generating artwork immediately after purchase
+- **Usage tracking**: Real-time display of remaining credits, active subscriptions, and generation history
+- **Billing management**: View purchase history, subscription status, and upcoming renewals
+- **Seamless integration**: Showcases how to redirect users back to your application with proper entitlement tracking
 
-<Frame>
-  <img alt="Static Payment Link Example" src="/images/atlas/static-link.png" />
-</Frame>
+<Check>
+The dashboard experience demonstrates best practices for post-purchase user flows, including entitlement verification and usage monitoring.
+</Check>
 
-<Frame>
-  <img alt="Dynamic Checkout Session" src="/images/atlas/dynamic-link.png" />
-</Frame>
+## Technical Implementation
 
-Atlas is powered by [Dodo Payments Node SDK](https://github.com/dodopayments/dodopayments-node.git) which is just a few lines of code
+Atlas is built using the [Dodo Payments TypeScript SDK](/developer-resources/sdks/typescript), demonstrating how to integrate billing flows with just a few lines of code.
 
-Follow this guide for integration: [Guide](/developer-resources/integration-guide)
+<CardGroup cols={2}>
+<Card title="Integration Guide" icon="book" href="/developer-resources/integration-guide">
+Learn how to integrate Dodo Payments checkout flows into your application.
+</Card>
 
-This project is open source check it out [here](https://github.com/dodopayments/dodo-checkout-demo.git)
+<Card title="TypeScript SDK" icon="code" href="/developer-resources/sdks/typescript">
+Explore the TypeScript SDK documentation and API reference.
+</Card>
+</CardGroup>
 
-The **Atlas Demo Product** is a **realistic AI art generation platform** demonstrating how merchants can **embed** Dodo Payments' checkout flows for **usage-based billing**, **subscription**, and **one-time** transactions. The **post-purchase dashboard experience** further illustrates how to implement billing tracking, usage management, and entitlement features, ensuring a smooth and professional user journey.
+## Open Source
+
+Atlas is an open-source project. Explore the codebase to see how billing flows are implemented in a real application.
+
+<Card title="View on GitHub" icon="github" href="https://github.com/dodopayments/dodo-checkout-demo.git">
+Browse the Atlas source code and learn from the implementation.
+</Card>
