@@ -33,14 +33,14 @@ You can add metadata when creating or updating objects through the API. For prod
 ### Via API
 
 ```javascript
-// Adding metadata when creating a customer
-const customer = await client.customers.create({
-    name: 'John Doe',
-    email: 'john@example.com',
+// Adding metadata when creating a checkout session
+const checkoutSession = await client.checkoutSessions.create({
+    product_cart: [{ product_id: 'product_id', quantity: 1 }],
+    return_url: 'https://example.com/return',
     metadata: {
-        account_tier: 'premium',
-        signup_source: 'website',
-        referral_code: 'REF123'
+        order_id: 'ORD-123',
+        campaign_source: 'email',
+        customer_segment: 'premium'
     }
 });
 
@@ -82,9 +82,9 @@ Using the dashboard UI for product metadata is particularly useful for non-techn
 Metadata is included in API responses when retrieving objects:
 
 ```javascript
-// Retrieving customer metadata
-const customer = await client.customers.retrieve('cus_123');
-console.log(customer.metadata.account_tier); // 'premium'
+// Retrieving checkout session metadata
+const checkoutSession = await client.checkoutSessions.retrieve('cs_123');
+console.log(checkoutSession.metadata.order_id); // 'ORD-123'
 
 // Retrieving payment metadata
 const payment = await client.payments.retrieve('pay_123');
@@ -100,13 +100,13 @@ While metadata is not directly searchable via our API, you can:
 3. Filter the results in your application code
 
 ```javascript
-// Example: Find a customer using metadata
-const customers = await client.customers.list({
+// Example: Find a checkout session using metadata
+const checkoutSessions = await client.checkoutSessions.list({
   limit: 100
 });
 
-const matchingCustomer = customers.data.find(
-  customer => customer.metadata?.account_tier === 'premium'
+const matchingSession = checkoutSessions.data.find(
+  session => session.metadata?.order_id === 'ORD-123'
 );
 
 // Example: Find a payment using your order ID
@@ -141,10 +141,11 @@ Metadata is supported on the following objects:
 
 | Object Type | Support |
 |------------|---------|
-| Customers | ✓ |
 | Payments | ✓ |
 | Subscriptions | ✓ |
 | Products | ✓ |
+| Refunds | ✓ |
+| Checkout Sessions | ✓ |
 
 ## Webhooks and Metadata
 
@@ -160,9 +161,10 @@ app.post('/webhook', (req, res) => {
     // Process order using your internal order ID
   }
   
-  if (event.type === 'customer.created') {
-    const accountTier = event.data.object.metadata.account_tier;
-    // Handle customer creation with custom metadata
+  if (event.type === 'checkout.session.completed') {
+    const orderId = event.data.object.metadata.order_id;
+    const campaignSource = event.data.object.metadata.campaign_source;
+    // Handle checkout session completion with custom metadata
   }
 });
 ```
