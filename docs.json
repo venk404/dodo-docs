@@ -319,7 +319,8 @@
               "api-reference/subscriptions/change-plan",
               "api-reference/subscriptions/patch-subscriptions",
               "api-reference/subscriptions/create-charge",
-              "api-reference/subscriptions/get-usage-history"
+              "api-reference/subscriptions/get-usage-history",
+              "api-reference/subscriptions/update-payment-method"
             ]
           },
           {
@@ -353,7 +354,8 @@
               "api-reference/customers/get-customers",
               "api-reference/customers/get-customers-1",
               "api-reference/customers/patch-customer",
-              "api-reference/customers/create-customer-portal-session"
+              "api-reference/customers/create-customer-portal-session",
+              "api-reference/customers/get-customer-payment-methods"
             ]
           },
           {

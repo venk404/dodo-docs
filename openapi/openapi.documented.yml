@@ -5,7 +5,7 @@ info:
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
-  version: 1.56.3
+  version: 1.60.0
 servers:
   - url: https://test.dodopayments.com/
     description: Test Mode Server Host
@@ -2175,6 +2175,116 @@ paths:
             customer_portal_session = dodo_payments.customers.customer_portal.create("customer_id")
 
             puts(customer_portal_session)
+  /customers/{customer_id}/payment-methods:
+    get:
+      tags:
+        - Customers
+      operationId: get_customer_payment_methods
+      parameters:
+        - name: customer_id
+          in: path
+          description: Customer Id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListCustomerPaymentMethodsResponse'
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: |-
+            import DodoPayments from 'dodopayments';
+
+            const client = new DodoPayments({
+              bearerToken: 'My Bearer Token',
+            });
+
+            const response = await client.customers.retrievePaymentMethods('customer_id');
+
+            console.log(response.items);
+        - lang: Python
+          source: |-
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token="My Bearer Token",
+            )
+            response = client.customers.retrieve_payment_methods(
+                "customer_id",
+            )
+            print(response.items)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"),
+              )
+              response, err := client.Customers.GetPaymentMethods(context.TODO(), "customer_id")
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", response.Items)
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.customers.CustomerRetrievePaymentMethodsParams;
+            import com.dodopayments.api.models.customers.CustomerRetrievePaymentMethodsResponse;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    CustomerRetrievePaymentMethodsResponse response = client.customers().retrievePaymentMethods("customer_id");
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.customers.CustomerRetrievePaymentMethodsParams
+            import com.dodopayments.api.models.customers.CustomerRetrievePaymentMethodsResponse
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val response: CustomerRetrievePaymentMethodsResponse = client.customers().retrievePaymentMethods("customer_id")
+            }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token",
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            response = dodo_payments.customers.retrieve_payment_methods("customer_id")
+
+            puts(response)
   /customers/{customer_id}/wallets:
     get:
       tags:
@@ -6968,6 +7078,7 @@ paths:
             });
 
             const product = await client.products.create({
+              name: 'name',
               price: { currency: 'AED', discount: 0, price: 0, purchasing_power_parity: true, type: 'one_time_price' },
               tax_category: 'digital_products',
             });
@@ -6981,6 +7092,7 @@ paths:
                 bearer_token="My Bearer Token",
             )
             product = client.products.create(
+                name="name",
                 price={
                     "currency": "AED",
                     "discount": 0,
@@ -7008,6 +7120,7 @@ paths:
                 option.WithBearerToken("My Bearer Token"),
               )
               product, err := client.Products.New(context.TODO(), dodopayments.ProductNewParams{
+                Name: dodopayments.F("name"),
                 Price: dodopayments.F[dodopayments.PriceUnionParam](dodopayments.PriceOneTimePriceParam{
                   Currency: dodopayments.F(dodopayments.CurrencyAed),
                   Discount: dodopayments.F(int64(0)),
@@ -7041,6 +7154,7 @@ paths:
                     DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
 
                     ProductCreateParams params = ProductCreateParams.builder()
+                        .name("name")
                         .price(Price.OneTimePrice.builder()
                             .currency(Currency.AED)
                             .discount(0L)
@@ -7069,6 +7183,7 @@ paths:
                 val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
 
                 val params: ProductCreateParams = ProductCreateParams.builder()
+                    .name("name")
                     .price(Price.OneTimePrice.builder()
                         .currency(Currency.AED)
                         .discount(0L)
@@ -7090,6 +7205,7 @@ paths:
             )
 
             product = dodo_payments.products.create(
+              name: "name",
               price: {currency: :AED, discount: 0, price: 0, purchasing_power_parity: true, type: :one_time_price},
               tax_category: :digital_products
             )
@@ -9040,6 +9156,155 @@ paths:
             response = dodo_payments.subscriptions.charge("subscription_id", product_price: 0)
 
             puts(response)
+  /subscriptions/{subscription_id}/update-payment-method:
+    post:
+      tags:
+        - Subscriptions
+      operationId: update
+      parameters:
+        - name: subscription_id
+          in: path
+          description: Subscription Id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePaymentMethodReq'
+        required: true
+      responses:
+        '200':
+          description: Payment method updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdatePaymentMethodResponse'
+        '422':
+          description: Invalid Request Object or Parameters
+        '500':
+          description: Something went wrong :(
+      security:
+        - API_KEY: []
+      x-codeSamples:
+        - lang: JavaScript
+          source: >-
+            import DodoPayments from 'dodopayments';
+
+
+            const client = new DodoPayments({
+              bearerToken: 'My Bearer Token',
+            });
+
+
+            const response = await client.subscriptions.updatePaymentMethod('subscription_id', { type: 'new'
+            });
+
+
+            console.log(response.payment_id);
+        - lang: Python
+          source: |-
+            from dodopayments import DodoPayments
+
+            client = DodoPayments(
+                bearer_token="My Bearer Token",
+            )
+            response = client.subscriptions.update_payment_method(
+                subscription_id="subscription_id",
+                type="new",
+            )
+            print(response.payment_id)
+        - lang: Go
+          source: |
+            package main
+
+            import (
+              "context"
+              "fmt"
+
+              "github.com/dodopayments/dodopayments-go"
+              "github.com/dodopayments/dodopayments-go/option"
+            )
+
+            func main() {
+              client := dodopayments.NewClient(
+                option.WithBearerToken("My Bearer Token"),
+              )
+              response, err := client.Subscriptions.UpdatePaymentMethod(
+                context.TODO(),
+                "subscription_id",
+                dodopayments.SubscriptionUpdatePaymentMethodParams{
+                  Body: dodopayments.SubscriptionUpdatePaymentMethodParamsBodyObject{
+                    Type: dodopayments.F(dodopayments.SubscriptionUpdatePaymentMethodParamsBodyObjectTypeNew),
+                  },
+                },
+              )
+              if err != nil {
+                panic(err.Error())
+              }
+              fmt.Printf("%+v\n", response.PaymentID)
+            }
+        - lang: Java
+          source: |-
+            package com.dodopayments.api.example;
+
+            import com.dodopayments.api.client.DodoPaymentsClient;
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient;
+            import com.dodopayments.api.models.subscriptions.SubscriptionUpdatePaymentMethodParams;
+            import com.dodopayments.api.models.subscriptions.SubscriptionUpdatePaymentMethodResponse;
+
+            public final class Main {
+                private Main() {}
+
+                public static void main(String[] args) {
+                    DodoPaymentsClient client = DodoPaymentsOkHttpClient.fromEnv();
+
+                    SubscriptionUpdatePaymentMethodParams params = SubscriptionUpdatePaymentMethodParams.builder()
+                        .subscriptionId("subscription_id")
+                        .body(SubscriptionUpdatePaymentMethodParams.Body.UnionMember0.builder()
+                            .type(SubscriptionUpdatePaymentMethodParams.Body.UnionMember0.Type.NEW)
+                            .build())
+                        .build();
+                    SubscriptionUpdatePaymentMethodResponse response = client.subscriptions().updatePaymentMethod(params);
+                }
+            }
+        - lang: Kotlin
+          source: |-
+            package com.dodopayments.api.example
+
+            import com.dodopayments.api.client.DodoPaymentsClient
+            import com.dodopayments.api.client.okhttp.DodoPaymentsOkHttpClient
+            import com.dodopayments.api.models.subscriptions.SubscriptionUpdatePaymentMethodParams
+            import com.dodopayments.api.models.subscriptions.SubscriptionUpdatePaymentMethodResponse
+
+            fun main() {
+                val client: DodoPaymentsClient = DodoPaymentsOkHttpClient.fromEnv()
+
+                val params: SubscriptionUpdatePaymentMethodParams = SubscriptionUpdatePaymentMethodParams.builder()
+                    .subscriptionId("subscription_id")
+                    .body(SubscriptionUpdatePaymentMethodParams.Body.UnionMember0.builder()
+                        .type(SubscriptionUpdatePaymentMethodParams.Body.UnionMember0.Type.NEW)
+                        .build())
+                    .build()
+                val response: SubscriptionUpdatePaymentMethodResponse = client.subscriptions().updatePaymentMethod(params)
+            }
+        - lang: Ruby
+          source: |-
+            require "dodopayments"
+
+            dodo_payments = Dodopayments::Client.new(
+              bearer_token: "My Bearer Token",
+              environment: "test_mode" # defaults to "live_mode"
+            )
+
+            response = dodo_payments.subscriptions.update_payment_method(
+              "subscription_id",
+              payment_method_id: "payment_method_id",
+              type: :existing
+            )
+
+            puts(response)
   /subscriptions/{subscription_id}/usage-history:
     get:
       tags:
@@ -10573,6 +10838,20 @@ components:
             if customer is allowed to change currency, set it to true
 
             Default is true
+        allow_customer_editing_city:
+          type: boolean
+        allow_customer_editing_country:
+          type: boolean
+        allow_customer_editing_email:
+          type: boolean
+        allow_customer_editing_name:
+          type: boolean
+        allow_customer_editing_state:
+          type: boolean
+        allow_customer_editing_street:
+          type: boolean
+        allow_customer_editing_zipcode:
+          type: boolean
         allow_discount_code:
           type: boolean
           description: |-
@@ -10609,6 +10888,24 @@ components:
       enum:
         - and
         - or
+    ConnectorMandateInformation:
+      type: object
+      required:
+        - connector_mandate_id
+        - original_payment_authorized_amount
+        - original_payment_authorized_currency
+      properties:
+        connector_mandate_id:
+          type: string
+        original_payment_authorized_amount:
+          type: integer
+          format: int64
+        original_payment_authorized_currency:
+          $ref: '#/components/schemas/Currency'
+        payment_method_type:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/PaymentMethodTypes'
     CountryCodeAlpha2:
       type: string
       description: ISO country code alpha2 variant
@@ -11000,6 +11297,9 @@ components:
       properties:
         email:
           type: string
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+          description: Additional metadata for the customer
         name:
           type: string
         phone_number:
@@ -11272,6 +11572,7 @@ components:
     CreateProductRequest:
       type: object
       required:
+        - name
         - tax_category
         - price
       properties:
@@ -11329,10 +11630,8 @@ components:
           $ref: '#/components/schemas/Metadata'
           description: Additional metadata for the product
         name:
-          type:
-            - string
-            - 'null'
-          description: Optional name of the product
+          type: string
+          description: Name of the product
         price:
           $ref: '#/components/schemas/Price'
           description: Price configuration for the product
@@ -11857,6 +12156,9 @@ components:
         email:
           type: string
           description: Email address of the customer
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+          description: Additional metadata associated with the customer
         name:
           type: string
           description: Full name of the customer
@@ -11865,6 +12167,70 @@ components:
             - string
             - 'null'
           description: Phone number of the customer
+    CustomerPaymentMethodCardSummary:
+      type: object
+      properties:
+        card_issuing_country:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/CountryCodeAlpha2'
+        card_network:
+          type:
+            - string
+            - 'null'
+        card_type:
+          type:
+            - string
+            - 'null'
+        expiry_month:
+          type:
+            - string
+            - 'null'
+        expiry_year:
+          type:
+            - string
+            - 'null'
+        last4_digits:
+          type:
+            - string
+            - 'null'
+    CustomerPaymentMethodItem:
+      type: object
+      required:
+        - payment_method_id
+        - payment_method
+        - connector_payment_methods
+        - profile_map
+      properties:
+        card:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/CustomerPaymentMethodCardSummary'
+        connector_payment_methods:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ConnectorMandateInformation'
+          propertyNames:
+            type: string
+        last_used_at:
+          type:
+            - string
+            - 'null'
+          format: date-time
+        payment_method:
+          $ref: '#/components/schemas/PaymentMethod'
+        payment_method_id:
+          type: string
+        profile_map:
+          type: object
+          additionalProperties:
+            type: string
+          propertyNames:
+            type: string
+        recurring_enabled:
+          type:
+            - boolean
+            - 'null'
     CustomerRequest:
       oneOf:
         - $ref: '#/components/schemas/AttachExistingCustomer'
@@ -11888,6 +12254,9 @@ components:
           type: string
         email:
           type: string
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+          description: Additional metadata for the customer
         name:
           type: string
         phone_number:
@@ -13069,6 +13438,15 @@ components:
           items:
             $ref: '#/components/schemas/BrandResponse'
           description: List of brands for this business
+    ListCustomerPaymentMethodsResponse:
+      type: object
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomerPaymentMethodItem'
     ListDisputeResponse:
       type: object
       required:
@@ -13677,6 +14055,11 @@ components:
     PatchCustomerRequest:
       type: object
       properties:
+        metadata:
+          oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/Metadata'
+              description: Additional metadata for the customer
         name:
           type:
             - string
@@ -14012,6 +14395,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PaymentLineItem'
+    PaymentMethod:
+      type: string
+      description: >-
+        PaymentMethod enum from hyperswitch
+
+
+        https://github.com/juspay/hyperswitch/blob/ecd05d53c99ae701ac94893ec632a3988afe3238/crates/common_enums/src/enums.rs#L2097
+      enum:
+        - card
+        - card_redirect
+        - pay_later
+        - wallet
+        - bank_redirect
+        - bank_transfer
+        - crypto
+        - bank_debit
+        - reward
+        - real_time_payment
+        - upi
+        - voucher
+        - gift_card
+        - open_banking
+        - mobile_payment
     PaymentMethodTypes:
       type: string
       enum:
@@ -14627,6 +15033,11 @@ components:
         payment_frequency_interval:
           $ref: '#/components/schemas/TimeInterval'
           description: Time interval for payment frequency (e.g. month, year)
+        payment_method_id:
+          type:
+            - string
+            - 'null'
+          description: Saved payment method id used for recurring charges
         previous_billing_date:
           type: string
           format: date-time
@@ -14760,6 +15171,11 @@ components:
         payment_frequency_interval:
           $ref: '#/components/schemas/TimeInterval'
           description: Time interval for payment frequency (e.g. month, year)
+        payment_method_id:
+          type:
+            - string
+            - 'null'
+          description: Saved payment method id used for recurring charges
         previous_billing_date:
           type: string
           format: date-time
@@ -14848,6 +15264,51 @@ components:
         url:
           type: string
           description: Presigned URL to upload the image
+    UpdatePaymentMethodReq:
+      oneOf:
+        - type: object
+          required:
+            - type
+          properties:
+            return_url:
+              type:
+                - string
+                - 'null'
+            type:
+              type: string
+              enum:
+                - new
+        - type: object
+          required:
+            - payment_method_id
+            - type
+          properties:
+            payment_method_id:
+              type: string
+            type:
+              type: string
+              enum:
+                - existing
+    UpdatePaymentMethodResponse:
+      type: object
+      properties:
+        client_secret:
+          type:
+            - string
+            - 'null'
+        expires_on:
+          type:
+            - string
+            - 'null'
+          format: date-time
+        payment_id:
+          type:
+            - string
+            - 'null'
+        payment_link:
+          type:
+            - string
+            - 'null'
     UpdateProductImageResponse:
       type: object
       required:
@@ -15120,6 +15581,7 @@ webhooks:
                 customer:
                   customer_id: cus_8VbC6JDZzPEqfBPUdpj0K
                   email: test@acme.com
+                  metadata: {}
                   name: Test user
                   phone_number: '+447700900123'
                 dispute_id: dp_q9BVPKzA4HeQs2f2PmDc
@@ -15187,6 +15649,7 @@ webhooks:
                 customer:
                   customer_id: cus_8VbC6JDZzPEqfBPUdpj0K
                   email: test@acme.com
+                  metadata: {}
                   name: Test user
                   phone_number: '+447700900123'
                 dispute_id: dp_q9BVPKzA4HeQs2f2PmDc
@@ -15254,6 +15717,7 @@ webhooks:
                 customer:
                   customer_id: cus_8VbC6JDZzPEqfBPUdpj0K
                   email: test@acme.com
+                  metadata: {}
                   name: Test user
                   phone_number: '+447700900123'
                 dispute_id: dp_q9BVPKzA4HeQs2f2PmDc
@@ -15321,6 +15785,7 @@ webhooks:
                 customer:
                   customer_id: cus_8VbC6JDZzPEqfBPUdpj0K
                   email: test@acme.com
+                  metadata: {}
                   name: Test user
                   phone_number: '+447700900123'
                 dispute_id: dp_q9BVPKzA4HeQs2f2PmDc
@@ -15388,6 +15853,7 @@ webhooks:
                 customer:
                   customer_id: cus_8VbC6JDZzPEqfBPUdpj0K
                   email: test@acme.com
+                  metadata: {}
                   name: Test user
                   phone_number: '+447700900123'
                 dispute_id: dp_q9BVPKzA4HeQs2f2PmDc
@@ -15455,6 +15921,7 @@ webhooks:
                 customer:
                   customer_id: cus_8VbC6JDZzPEqfBPUdpj0K
                   email: test@acme.com
+                  metadata: {}
                   name: Test user
                   phone_number: '+447700900123'
                 dispute_id: dp_q9BVPKzA4HeQs2f2PmDc
@@ -15522,6 +15989,7 @@ webhooks:
                 customer:
                   customer_id: cus_8VbC6JDZzPEqfBPUdpj0K
                   email: test@acme.com
+                  metadata: {}
                   name: Test user
                   phone_number: '+447700900123'
                 dispute_id: dp_q9BVPKzA4HeQs2f2PmDc
@@ -15664,6 +16132,7 @@ webhooks:
                 customer:
                   customer_id: cus_8VbC6JDZzPEqfB
                   email: test@acme.com
+                  metadata: {}
                   name: Test user
                   phone_number: '+15555550100'
                 digital_products_delivered: false
@@ -15758,6 +16227,7 @@ webhooks:
                 customer:
                   customer_id: cus_8VbC6JDZzPEqfB
                   email: test@acme.com
+                  metadata: {}
                   name: Test user
                   phone_number: '+15555550100'
                 digital_products_delivered: false
@@ -15852,6 +16322,7 @@ webhooks:
                 customer:
                   customer_id: cus_8VbC6JDZzPEqfB
                   email: test@acme.com
+                  metadata: {}
                   name: Test user
                   phone_number: '+15555550100'
                 digital_products_delivered: false
@@ -15946,6 +16417,7 @@ webhooks:
                 customer:
                   customer_id: cus_8VbC6JDZzPEqfB
                   email: test@acme.com
+                  metadata: {}
                   name: Test user
                   phone_number: '+15555550100'
                 digital_products_delivered: false
@@ -16029,6 +16501,7 @@ webhooks:
                 customer:
                   customer_id: cus_123
                   email: jane@example.com
+                  metadata: {}
                   name: Jane Doe
                   phone_number: null
                 is_partial: false
@@ -16096,6 +16569,7 @@ webhooks:
                 customer:
                   customer_id: cus_123
                   email: jane@example.com
+                  metadata: {}
                   name: Jane Doe
                   phone_number: null
                 is_partial: false
@@ -16170,6 +16644,7 @@ webhooks:
                 customer:
                   customer_id: cus_8VbC6JDZzPEqfBPUdpj0K
                   email: test@acme.com
+                  metadata: {}
                   name: Test user
                   phone_number: null
                 discount_cycles_remaining: 3
@@ -16182,6 +16657,7 @@ webhooks:
                 payload_type: Subscription
                 payment_frequency_count: 1
                 payment_frequency_interval: Month
+                payment_method_id: null
                 previous_billing_date: '2025-07-23T12:01:21.506021Z'
                 product_id: pdt_RUST4raxbl0Rfe4VQi1z
                 quantity: 1
@@ -16258,6 +16734,7 @@ webhooks:
                 customer:
                   customer_id: cus_8VbC6JDZzPEqfBPUdpj0K
                   email: test@acme.com
+                  metadata: {}
                   name: Test user
                   phone_number: null
                 discount_cycles_remaining: 3
@@ -16270,6 +16747,7 @@ webhooks:
                 payload_type: Subscription
                 payment_frequency_count: 1
                 payment_frequency_interval: Month
+                payment_method_id: null
                 previous_billing_date: '2025-07-23T12:01:21.506021Z'
                 product_id: pdt_RUST4raxbl0Rfe4VQi1z
                 quantity: 1
@@ -16346,6 +16824,7 @@ webhooks:
                 customer:
                   customer_id: cus_8VbC6JDZzPEqfBPUdpj0K
                   email: test@acme.com
+                  metadata: {}
                   name: Test user
                   phone_number: null
                 discount_cycles_remaining: 3
@@ -16358,6 +16837,7 @@ webhooks:
                 payload_type: Subscription
                 payment_frequency_count: 1
                 payment_frequency_interval: Month
+                payment_method_id: null
                 previous_billing_date: '2025-07-23T12:01:21.506021Z'
                 product_id: pdt_RUST4raxbl0Rfe4VQi1z
                 quantity: 1
@@ -16434,6 +16914,7 @@ webhooks:
                 customer:
                   customer_id: cus_8VbC6JDZzPEqfBPUdpj0K
                   email: test@acme.com
+                  metadata: {}
                   name: Test user
                   phone_number: null
                 discount_cycles_remaining: 3
@@ -16446,6 +16927,7 @@ webhooks:
                 payload_type: Subscription
                 payment_frequency_count: 1
                 payment_frequency_interval: Month
+                payment_method_id: null
                 previous_billing_date: '2025-07-23T12:01:21.506021Z'
                 product_id: pdt_RUST4raxbl0Rfe4VQi1z
                 quantity: 1
@@ -16522,6 +17004,7 @@ webhooks:
                 customer:
                   customer_id: cus_8VbC6JDZzPEqfBPUdpj0K
                   email: test@acme.com
+                  metadata: {}
                   name: john doe
                   phone_number: null
                 discount_cycles_remaining: 3
@@ -16534,6 +17017,7 @@ webhooks:
                 payload_type: Subscription
                 payment_frequency_count: 1
                 payment_frequency_interval: Month
+                payment_method_id: null
                 previous_billing_date: '2025-07-23T12:01:21.506021Z'
                 product_id: pdt_RUST4raxbl0Rfe4VQi1z
                 quantity: 1
@@ -16610,6 +17094,7 @@ webhooks:
                 customer:
                   customer_id: cus_8VbC6JDZzPEqfBPUdpj0K
                   email: test@acme.com
+                  metadata: {}
                   name: Test user
                   phone_number: null
                 discount_cycles_remaining: 3
@@ -16622,6 +17107,7 @@ webhooks:
                 payload_type: Subscription
                 payment_frequency_count: 1
                 payment_frequency_interval: Month
+                payment_method_id: null
                 previous_billing_date: '2025-07-23T12:01:21.506021Z'
                 product_id: pdt_RUST4raxbl0Rfe4VQi1z
                 quantity: 1
@@ -16698,6 +17184,7 @@ webhooks:
                 customer:
                   customer_id: cus_8VbC6JDZzPEqfBPUdpj0K
                   email: test@acme.com
+                  metadata: {}
                   name: Test user
                   phone_number: null
                 discount_cycles_remaining: 3
@@ -16710,6 +17197,7 @@ webhooks:
                 payload_type: Subscription
                 payment_frequency_count: 1
                 payment_frequency_interval: Month
+                payment_method_id: null
                 previous_billing_date: '2025-07-23T12:01:21.506021Z'
                 product_id: pdt_RUST4raxbl0Rfe4VQi1z
                 quantity: 1
