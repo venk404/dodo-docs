@@ -115,11 +115,17 @@ You can refer to /miscellaneous/accounts#managing-multiple-businesses for more d
 </Accordion>
 
 <Accordion title="Q18: My verification was declined due to entity mismatch. What should I do?">
-  A: If you selected the wrong entity type (e.g., chose “Organization” but you’re an individual or a Sole Prop with GST), your verification might be On-hold, requiring you to change or update the documentation. 
+  A: If your verification was declined due to an entity mismatch (e.g., you selected "Organization" but you're an individual or a Sole Prop with GST), you'll need to correct the registration type and resubmit your documents.
 
   Steps to fix: 
-  Step 1: Inform support via Intercom or Discord who will help you enable resubmission for the Payout Compliance form. 
-  Step 2: Choose the right registration type, and resubmit the required documents. 
+  Step 1: Check your dashboard or email for the specific reason for decline.
+  Step 2: Contact support via Intercom or support email (support@dodopayments.com) to request resubmission access for the Payout Compliance form.
+  Step 3: Select the correct registration type (Individual vs Organization) and resubmit all required documents.
+  Step 4: Wait for the compliance team to review your resubmission.
+
+  <Note>
+  The resubmission option will be enabled by our verification team after you contact support. Make sure to select the correct entity type this time to avoid further delays.
+  </Note>
 </Accordion>
 
 <Accordion title="Q19: I reached $100 in earnings. Will my account get verified faster?">
@@ -228,7 +234,7 @@ You can refer to /miscellaneous/accounts#managing-multiple-businesses for more d
 </Accordion>
 
 <Accordion title="Q30: Are address data such as city, state, zipcode fields mandatory? Can I exclude requesting those values from my customer?">
-  A: Yes they are mandatory as we are the Merchant of Record and generate invoices, file taxes and ensure all purchases are compliant we require the Merchant's billing address. You can implement our API based checkout flow where you can pre-fill the customer's details if you have already collected them to ensure a smoother experience for your customers but we will need these details for every purchase.
+  A: Yes, they are mandatory. As we are the Merchant of Record and generate invoices, file taxes, and ensure all purchases are compliant, we require the customer's billing address. You can implement our API-based checkout flow where you can pre-fill the customer's details if you have already collected them to ensure a smoother experience for your customers, but we will need these details for every purchase.
 </Accordion>
 
 <Accordion title="Q31: Do I need to file taxes in the US if I sell there?">
@@ -239,16 +245,21 @@ You can refer to /miscellaneous/accounts#managing-multiple-businesses for more d
 </Accordion>
 
 <Accordion title="Q32: I don't know whether to fill W-8BEN or W-8BEN-E — help?">
-  A: Use the following logic:
+  A: Use the following logic to determine which form you need:
 
   | You are... | Form to Submit | Merchant Type |
   |------------|----------------|---------------|
-  | Sole Proprietor, Freelancer | W-8BEN | Individual |
-  | Pvt Ltd, LLP, Registered Org | W-8BEN-E | Organization |
+  | Sole Proprietor, Freelancer, Individual | W-8BEN | Individual |
+  | Pvt Ltd, LLP, Registered Organization | W-8BEN-E | Organization |
 
-  Still unsure?
-  - If your bank account is under your name, you're likely an individual.
-  - If it's under a company, you're an organization.
+  Still unsure? Consider these indicators:
+  - **If your bank account is under your personal name**, you're likely an Individual → Use W-8BEN
+  - **If your bank account is under a company name**, you're an Organization → Use W-8BEN-E
+  - **If you have a GST but operate with a personal bank account**, you're still considered an Individual → Use W-8BEN
+
+  <Tip>
+  If you're a sole proprietor with GST, you're still an Individual. Only registered legal entities (Pvt Ltd, LLP, etc.) should use W-8BEN-E.
+  </Tip>
 </Accordion>
 
 <Accordion title="Q33: I am a US Citizen or Organisation registered in the United States. Which tax form am I supposed to fill?">
@@ -259,12 +270,15 @@ You can refer to /miscellaneous/accounts#managing-multiple-businesses for more d
   A: For Individuals, PAN is a mandatory requirement (for KYC and tax purposes). For registered businesses, either Business PAN or GSTIN can be submitted. GST is optional unless you exceed the registration threshold or want input credit
 </Accordion>
 
-<Accordion title="Q35: Should I submit W-8BEN or W-8BEN-E?">
-  A: Use the form based on your merchant type:
-  - **Individual/Sole Proprietor**: W-8BEN
-  - **Private Limited or LLP**: W-8BEN-E
+<Accordion title="Q35: I have a Udyam/MSME certificate. Should I submit W-8BEN or W-8BEN-E?">
+  A: Having a Udyam/MSME certificate does not automatically make you an Organization. The form you submit depends on your bank account type:
 
-  If you have a Udyam/MSME certificate but operate with a personal bank account, you're still considered an Individual.
+  - **If you operate with a personal bank account** (even with Udyam/MSME certificate): You're considered an **Individual** → Submit **W-8BEN**
+  - **If you operate with a company bank account** (registered entity): You're an **Organization** → Submit **W-8BEN-E**
+
+  <Note>
+  The key factor is whether your bank account is in your personal name or your company's name, not whether you have business registration certificates.
+  </Note>
 </Accordion>
 
 <Accordion title="Q36: If Dodo handles taxes, why do I need to file W-8BEN(-E)?">
@@ -290,7 +304,7 @@ You can refer to /miscellaneous/accounts#managing-multiple-businesses for more d
 </Accordion>
 
 <Accordion title="Q40: Does the chargeback apply for business even if my business has a no refund policy?">
-  Yes. Even if you state No refunds in your terms or website, chargebacks are largely governed by the cardholder's bank and card network rules (e.g., Visa, Mastercard). A No refund policy does not override the card network's dispute resolution process. If a customer files a dispute, your business is still subject to a chargeback investigation. This means you must respond with evidence (proof of delivery, usage logs, terms acceptance, etc.) to fight or manage the dispute. If the customer's bank decides in favor of the cardholder, the chargeback fee and transaction reversal will apply regardless of your stated policy. We recommend having clear communications, tracking customer usage, and providing compelling evidence when chargebacks arise.
+  A: Yes. Even if you state "No refunds" in your terms or website, chargebacks are largely governed by the cardholder's bank and card network rules (e.g., Visa, Mastercard). A "No refund" policy does not override the card network's dispute resolution process. If a customer files a dispute, your business is still subject to a chargeback investigation. This means you must respond with evidence (proof of delivery, usage logs, terms acceptance, etc.) to fight or manage the dispute. If the customer's bank decides in favor of the cardholder, the chargeback fee and transaction reversal will apply regardless of your stated policy. We recommend having clear communications, tracking customer usage, and providing compelling evidence when chargebacks arise.
 </Accordion>
 
 <Accordion title="Q41: Why is payment.status sometimes null?">
@@ -350,7 +364,17 @@ You can refer to /miscellaneous/accounts#managing-multiple-businesses for more d
 </Accordion>
 
 <Accordion title="Q47: Does Dodo support UPI for subscriptions?">
-  A: Not currently. UPI is supported for one-time payments, but subscriptions rely on card mandates — UPI mandates are still in progress.
+  A: Yes, UPI subscriptions are supported with RBI-compliant mandates. UPI subscriptions operate under RBI (Reserve Bank of India) regulations with specific requirements:
+
+  - **Mandate Limits**: 
+    - Charges below ₹15,000: An on-demand mandate for ₹15,000 INR is created
+    - Charges ₹15,000 or above: A subscription mandate for the exact subscription amount is created
+  - **48-Hour Processing Delay**: Charges are initiated on the scheduled date, but the actual deduction occurs 48 hours after initiation (may extend up to 2-3 additional hours)
+  - **Mandate Cancellation**: Customers can cancel mandates via their banking apps during the 48-hour window
+
+  <Note>
+  UPI subscriptions have the same RBI-compliant mandate requirements as Indian card subscriptions. For detailed information, see the [Payment Methods documentation](/features/payment-methods#upi-and-rupay-india).
+  </Note>
 </Accordion>
 
 <Accordion title="Q48: How do I collect billing details without passing them in API?">
@@ -396,18 +420,37 @@ You can refer to /miscellaneous/accounts#managing-multiple-businesses for more d
   A: Dodo Payments charges the customer immediately upon subscription creation if the product does not have a trial period.
 
   <Note>
-  For Indian cards and if there is a free trial is configured for the product, the payment will take 24 hours to process after the trial ends. This is due to RBI regulation.
+  For Indian cards and UPI subscriptions, recurring charges follow RBI regulations with a 48-hour processing delay. Charges are initiated on the scheduled date, but the actual deduction from the customer's account occurs 48 hours after initiation. This 48-hour window may extend up to 2-3 additional hours depending on bank API responses.
   </Note>
 </Accordion>
 
 ## Payouts & Bank Integration
 
 <Accordion title="Q53: How do payouts work with Dodo Payments?">
-  A: Payouts are the transfer of your collected sales revenue to your linked bank account. Payouts are processed by the 15th of every month for previous month's billing cycle barring any special circumstances like bank holidays or emergencies
+  A: Payouts are the transfer of your collected sales revenue to your linked bank account. Dodo Payments supports multiple payout cycles:
+
+  - **Bi-Monthly (Default)**: 
+    - Billing Period 1: 1st to 15th → Payout on 18th of same month
+    - Billing Period 2: 16th to end of month → Payout on 4th of following month
+  - **Weekly**: Available for businesses with higher transaction volumes (contact support to request)
+  - **Monthly**: 
+    - Billing Period: 1st to end of month → Payout on 11th of following month
+
+  Payouts are only initiated if all verifications are successful and the payout threshold is met. It typically takes 1-2 business days for funds to appear in your bank account after the payout is initiated.
+
+  <Note>
+  Delays may occur if payout processing dates fall on weekends or bank holidays. The default payout cycle for all businesses is bi-monthly.
+  </Note>
 </Accordion>
 
 <Accordion title="Q54: What is the minimum threshold amount after fees & taxes to process payouts?">
-  A: Minimum Payout Threshold is $100 after platform fees & taxes deduction. You can see the exact wallet amount in your dashboard in the [payouts section](https://app.dodopayments.com/business/payouts).
+  A: The minimum payout threshold is **$50 USD** (or ₹1,000 INR) after platform fees and taxes deduction. You can customize your USD wallet threshold to any amount **≥ $50** directly from your dashboard. If your balance doesn't meet the threshold, it will carry forward to the next payout cycle.
+
+  You can see the exact wallet amount and manage your payout threshold in the [payouts section](https://app.dodopayments.com/business/payouts) of your dashboard.
+
+  <Note>
+  The flexible threshold feature is currently available for USD/EUR/GBP wallets. INR wallet threshold remains fixed at ₹1,000.
+  </Note>
 </Accordion>
 
 <Accordion title="Q55: How do I link my bank account to receive payouts?">
@@ -444,7 +487,7 @@ You can refer to /miscellaneous/accounts#managing-multiple-businesses for more d
 
 <Accordion title="Q61: My bank info and compliance form are still in review — what should I do?">
   A: Just wait. Our compliance team typically reviews forms within 1–2 working days. If it's urgent:
-  - mail to support@dodopayments.com
+  - Email support@dodopayments.com
 </Accordion>
 
 <Accordion title="Q62: What happens if my payout day falls on a Friday or weekend?">
@@ -480,23 +523,31 @@ You can refer to /miscellaneous/accounts#managing-multiple-businesses for more d
 </Accordion>
 
 <Accordion title="Q66: My country doesn't use SWIFT codes. How will that affect my verification?">
-  A: If your country does not issue SWIFT codes, Dodo Payments may accept alternative documentation or generic SWIFT formats.
+  A: If your country does not issue SWIFT codes, this will not block your verification, but it will require manual review by our compliance team.
 
   What to do:
-  - Contact support and explain the situation.
-  - Submit any official bank document confirming your account details and the absence of a SWIFT code.
-
-</Accordion>
-
-<Accordion title="Q67: My country doesn't use SWIFT codes. Will this block my verification?">
-  A: No, but you must:
-  - Explain your situation to support
-  - Provide bank documents that confirm your account number, holder name, and that no SWIFT is issued
-  - Sometimes a generic placeholder SWIFT may be used (based on country)
+  - Contact support and explain that your country doesn't issue SWIFT codes
+  - Submit official bank documents that confirm:
+    - Your account number
+    - Account holder name
+    - That no SWIFT code is issued in your country
+  - In some cases, a generic placeholder SWIFT may be used based on your country
 
   <Note>
-  This case will go through manual compliance review. DM your email ID or write to compliance@dodopayments.com for escalation.
+  This case will go through manual compliance review. For faster processing, write to compliance@dodopayments.com for escalation.
   </Note>
+</Accordion>
+
+<Accordion title="Q67: What alternative documentation can I provide if my country doesn't use SWIFT codes?">
+  A: If your country doesn't use SWIFT codes, provide the following alternative documentation:
+
+  - Official bank statement or certificate showing your account details
+  - Bank letter confirming your account number, holder name, and that SWIFT codes are not issued
+  - Any government-issued document that confirms your bank's routing information format
+
+  <Tip>
+  Contact support@dodopayments.com before submitting to ensure you provide the correct documentation format for your country.
+  </Tip>
 </Accordion>
 
 ## Invoicing & Reports
