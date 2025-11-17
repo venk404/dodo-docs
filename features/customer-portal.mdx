@@ -32,6 +32,7 @@ The portal provides a trusted, branded self‑service experience for customers t
 
 - **Access billing history**: View invoices and download.
 - **Manage subscriptions**: Cancel a subscription.
+- **Update payment methods**: Change payment methods for active subscriptions or reactivate subscriptions on hold.
 - **Retrieve license keys**: Access all keys tied to purchases
 
 ## Key Benefits
@@ -121,14 +122,88 @@ Dynamic links expire after 24 hours. If it expires, generate and send a new link
     Review active and past subscriptions, including renewal dates. Cancel any plan anytime.
 </Card>
 
-<Card title="License Keys" icon="key">
-    Access and copy every license key issued to you from new or past purchases.
+<Card title="Payment Methods" icon="credit-card">
+    Update payment methods for subscriptions. Reactivate subscriptions on hold by updating payment method to clear dues.
 </Card>
 
 <Card title="Profile" icon="user">
     View or update your name, email, and phone number directly in your profile settings.
 </Card>
 </CardGroup>
+
+## Updating Payment Methods
+
+Customers can update their payment methods directly from the Customer Portal. This feature is especially important for reactivating subscriptions that have been placed on hold due to failed payments.
+
+### Viewing Current Payment Method
+
+From the subscription management page, customers can see their current payment method displayed alongside subscription details. The payment method section shows the card type, last four digits, and an "Edit" button to update it.
+
+<Frame>
+    <img src="/images/customer-portal/subscription-payment-method.png" alt="Subscription details page showing current payment method with edit option"/>
+</Frame>
+
+### Updating Payment Method
+
+When customers click "Edit" on the payment method section, they can:
+
+1. **Select an existing payment method**: Choose from previously saved payment methods
+    <Frame caption="Edit payment method modal showing saved payment methods">
+        <img src="/images/customer-portal/edit-payment-method.png"/>
+    </Frame>
+2. **Add a new payment method**: Enter new card details securely
+    <Frame caption="Payment method update form with card input fields">
+        <img src="/images/customer-portal/update-payment-method-form.png"/>
+    </Frame>
+
+### Reactivating Subscriptions on Hold
+
+When a subscription is placed on `on_hold` state due to a failed payment, customers must update their payment method to reactivate it. The update process automatically:
+
+1. **Creates a charge** for remaining dues
+2. **Generates an invoice** for the charge
+3. **Processes the payment** using the new payment method
+4. **Reactivates the subscription** to `active` state upon successful payment
+
+<Warning>
+Subscriptions in `on_hold` state will not renew automatically. Customers must update their payment method to clear dues and reactivate the subscription.
+</Warning>
+
+<Info>
+After successfully updating the payment method for an `on_hold` subscription, customers will see a confirmation page and receive email notifications about the successful payment and subscription reactivation.
+</Info>
+
+<Frame>
+    <img src="/images/customer-portal/payment-successful.png" alt="Payment successful page confirming payment method update and subscription reactivation"/>
+</Frame>
+
+### Payment Method Update Flow
+
+<Steps>
+<Step title="Access subscription details">
+Navigate to the subscription management page in the Customer Portal to view subscription details and current payment method.
+</Step>
+
+<Step title="Click Edit on payment method">
+Click the "Edit" button next to the payment method section to open the payment method update interface.
+</Step>
+
+<Step title="Select or add payment method">
+Choose an existing saved payment method or add a new one by entering card details securely.
+</Step>
+
+<Step title="Confirm changes">
+Click "Confirm Changes" to update the payment method. For `on_hold` subscriptions, this will automatically create a charge for remaining dues.
+</Step>
+
+<Step title="Complete payment (if on hold)">
+If the subscription is on hold, customers will be redirected to complete the payment for remaining dues. Upon successful payment, the subscription is automatically reactivated.
+</Step>
+
+<Step title="Confirmation">
+Customers receive confirmation that the payment method has been updated and, if applicable, that the subscription has been reactivated.
+</Step>
+</Steps>
 
 ## Integration Examples
 
@@ -147,3 +222,5 @@ window.location.href = session.link;
 
 - **Link expired**: Generate and send a new dynamic link.
 - **Email not recognized**: Ask the customer to use the email associated with their purchase
+- **Subscription on hold**: If a subscription is on hold, customers must update their payment method through the portal to clear dues and reactivate the subscription. The update process will automatically charge for remaining dues.
+- **Payment method update failed**: If payment fails during the update process for an `on_hold` subscription, the subscription will remain on hold. Customers can try again with a different payment method.
