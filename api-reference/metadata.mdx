@@ -63,6 +63,17 @@ const product = await client.products.create({
         support_tier: 'priority'
     }
 });
+
+// Adding metadata when creating a customer
+const customer = await client.customers.create({
+    email: 'customer@example.com',
+    name: 'John Doe',
+    metadata: {
+        crm_id: 'CRM-12345',
+        customer_segment: 'enterprise',
+        referral_source: 'website'
+    }
+});
 ```
 
 ### Via Dashboard UI (Products Only)
@@ -89,6 +100,14 @@ console.log(checkoutSession.metadata.order_id); // 'ORD-123'
 // Retrieving payment metadata
 const payment = await client.payments.retrieve('pay_123');
 console.log(payment.metadata.order_id); // '6735'
+
+// Retrieving customer metadata
+const customer = await client.customers.retrieve('customer_123');
+console.log(customer.metadata.crm_id); // 'CRM-12345'
+
+// Retrieving refund metadata
+const refund = await client.refunds.retrieve('refund_123');
+console.log(refund.metadata.refund_reason); // 'customer_request'
 ```
 
 ## Searching and Filtering
@@ -146,6 +165,7 @@ Metadata is supported on the following objects:
 | Products | ✓ |
 | Refunds | ✓ |
 | Checkout Sessions | ✓ |
+| Customers | ✓ |
 
 ## Webhooks and Metadata
 

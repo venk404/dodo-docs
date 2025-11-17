@@ -526,6 +526,12 @@
             ]
           },
           {
+            "group": "November 2025",
+            "pages": [
+              "changelog/v1.61.5"
+            ]
+          },
+          {
             "group": "October 2025",
             "pages": [
               "changelog/v1.56.0"

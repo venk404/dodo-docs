@@ -1,0 +1,81 @@
+---
+title: v1.61.5 (November 17, 2025)
+description: "EUR & GBP pricing full rollout, payment method management, metadata in customers and refunds, checkout session feature flags, license key/file indicators, GitHub OAuth, and Featurebase integration"
+icon: "arrows-turn-right"
+---
+
+## New Features 🚀
+
+1. **EUR & GBP Pricing - Full Rollout**  
+   Native support for € EUR and £ GBP is now fully rolled out to all businesses worldwide, enabling seamless pricing and payment collection in these major currencies.
+   
+   You can now:
+   - Price products in € and £
+   - Collect payments natively in these currencies
+   - Settle directly in € and £ with no forex charges
+   
+   <Check>
+   Result: Higher success rates and better acceptance across the UK and Europe.
+   </Check>
+
+2. **Payment Method Management**  
+   Enhanced payment method management capabilities for subscriptions and customers. You can now update payment methods for existing subscriptions and retrieve all payment methods associated with a customer, making it easier to handle expired cards, failed payments, and customer preference changes.
+   
+   **Update Payment Methods for Subscriptions:**
+   - Update payment methods for active subscriptions without disruption
+   - Automatically reactivate `on_hold` subscriptions by updating payment methods
+   - Use existing saved payment methods or add new ones
+   - Automatic charge creation for remaining dues when reactivating subscriptions
+   
+   **Fetch Customer Payment Methods:**
+   - List all saved payment methods for a customer
+   - Use payment method IDs when updating subscriptions
+   - Improve customer experience by showing available payment options
+   
+   Learn more: [Update Payment Method API](/api-reference/subscriptions/update-payment-method) | [List Payment Methods API](/api-reference/customers/get-customer-payment-methods)
+
+3. **Metadata Support in Customer and Refund Objects**  
+   Metadata is now available on customer and refund objects, expanding your ability to store custom information and integrate with external systems.
+   - Attach metadata to customers for CRM integration and custom categorization
+   - Store additional context on refunds for better tracking and reporting
+   - Maintain consistency with other Dodo Payments objects that support metadata
+   
+   Learn more: [Metadata Guide](/api-reference/metadata)
+
+4. **Checkout Session Feature Flags for Customer Editing**  
+   New feature flags in checkout sessions give you granular control over what customers can edit during checkout, improving flexibility and user experience.
+   - `allow_customer_editing_name`: Enable customers to edit their name
+   - `allow_customer_editing_email`: Allow email address modifications
+   - `allow_customer_editing_street`: Permit street address editing
+   - `allow_customer_editing_city`: Enable city field editing
+   - `allow_customer_editing_state`: Allow state/province editing
+   - `allow_customer_editing_zipcode`: Enable postal code editing
+   - `allow_customer_editing_country`: Permit country selection changes
+   
+   These flags provide fine-grained control over the checkout experience, allowing you to customize which fields customers can modify based on your business requirements.
+
+5. **Checkout License Key and File Indicators**  
+   The checkout page now displays clear indicators when license keys or digital files are being purchased, improving transparency and customer confidence.
+   - Visual indicators for license key purchases
+   - Clear file download indicators
+   - Enhanced product type visibility during checkout
+
+6. **GitHub OAuth for Login Page**  
+   Enhanced authentication options with GitHub OAuth integration, providing developers and technical users with a familiar and secure login method.
+   - Sign in with GitHub account
+   - Streamlined authentication for developer accounts
+   - Additional security layer for team access
+
+7. **Featurebase Integration for Feature Requests and Roadmap**  
+   We've integrated Featurebase to provide a better experience for submitting feature requests and tracking our public roadmap.
+   - Submit and vote on feature requests
+   - View public product roadmap
+   - Track feature development status
+   - Community-driven prioritization
+   
+   Visit our public roadmap: [https://dodopayments.featurebase.app/](https://dodopayments.featurebase.app/)
+   
+   Learn more: [Feature Request and Roadmap](/features/feature-request)
+
+8. **Minor improvements and bug fixes**  
+  General enhancements and stability improvements across the platform.
