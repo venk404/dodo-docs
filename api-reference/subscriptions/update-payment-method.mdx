@@ -4,3 +4,48 @@ title: Update Payment Method
 description: Update the payment method for an existing subscription. You can either add a new payment method or use an existing one from the customer's saved payment methods.
 ---
 
+Update the payment method for a subscription. This endpoint supports both active subscriptions and subscriptions in `on_hold` state.
+
+<Info>
+For subscriptions in `on_hold` state, updating the payment method automatically creates a charge for remaining dues, generates an invoice, and reactivates the subscription to `active` state upon successful payment.
+</Info>
+
+### Use Cases
+
+- **Active subscriptions**: Update payment method when a card expires or customer wants to use a different payment method
+- **On hold subscriptions**: Reactivate subscriptions that went on hold due to failed payments by updating the payment method
+- **Payment method management**: Switch between saved payment methods or add new ones
+
+<Info>
+To list existing payment methods for a customer, use the [List Payment Methods API](/api-reference/customers/get-customer-payment-methods). This helps you retrieve available payment method IDs when using `type: "existing"` to update a subscription's payment method.
+</Info>
+
+### Behavior for Active Subscriptions
+
+When updating the payment method for an active subscription:
+
+- The payment method is updated immediately
+- No charge is created
+- The subscription remains active
+- Future renewals will use the new payment method
+
+### Behavior for On Hold Subscriptions
+
+When updating the payment method for a subscription in `on_hold` state:
+
+1. A charge is automatically created for remaining dues
+2. An invoice is generated for the charge
+3. The payment is processed using the new payment method
+4. Upon successful payment, the subscription is reactivated to `active` state
+5. You'll receive webhook events: `payment.succeeded` followed by `subscription.active`
+
+<Warning>
+If the payment fails after updating the payment method for an `on_hold` subscription, the subscription will remain in `on_hold` state. Monitor webhook events to track payment status.
+</Warning>
+
+### Webhook Events
+
+When updating a payment method for an `on_hold` subscription, you'll receive the following webhook events:
+
+1. **`payment.succeeded`** - The charge for remaining dues was successful
+2. **`subscription.active`** - The subscription has been reactivated

@@ -159,7 +159,142 @@ When a payment succeeds, you'll receive the following webhooks:
   - `subscription.failed` - Subscription creation failed due to failure to create a mandate.
   - `payment.failed` - Indicates failed payment.
 
+2. Subscription On Hold
+  - `subscription.on_hold` - Subscription is put on hold due to failed renewal payment or failed plan change charge.
+  - When a subscription goes on hold, it will not renew automatically until the payment method is updated.
+
 <Info>**Best Practice**: To simplify implementation, we recommend primarily tracking subscription events for managing the subscription lifecycle.</Info>
+
+### Handling Subscription On Hold
+
+When a subscription enters `on_hold` state, you need to update the payment method to reactivate it. This section explains when subscriptions go on hold and how to handle them.
+
+#### When Subscriptions Go On Hold
+
+A subscription is placed on hold when:
+
+- **Renewal payment fails**: The automatic renewal charge fails due to insufficient funds, expired card, or bank decline
+- **Plan change charge fails**: An immediate charge during plan upgrade/downgrade fails
+- **Payment method authorization fails**: The payment method cannot be authorized for recurring charges
+
+<Warning>
+Subscriptions in `on_hold` state will not renew automatically. You must update the payment method to reactivate the subscription.
+</Warning>
+
+#### Reactivating Subscriptions from On Hold
+
+To reactivate a subscription from `on_hold` state, use the Update Payment Method API. This automatically:
+
+1. Creates a charge for remaining dues
+2. Generates an invoice for the charge
+3. Processes the payment using the new payment method
+4. Reactivates the subscription to `active` state upon successful payment
+
+<Steps>
+<Step title="Handle subscription.on_hold webhook">
+When you receive a `subscription.on_hold` webhook, update your application state and notify the customer:
+
+```javascript
+// Webhook handler
+app.post('/webhooks/dodo', async (req, res) => {
+  const event = req.body;
+  
+  if (event.type === 'subscription.on_hold') {
+    const subscription = event.data;
+    
+    // Update subscription status in your database
+    await updateSubscriptionStatus(subscription.subscription_id, 'on_hold');
+    
+    // Notify customer to update payment method
+    await sendEmailToCustomer(subscription.customer_id, {
+      subject: 'Payment Required - Subscription On Hold',
+      message: 'Your subscription is on hold. Please update your payment method to continue service.'
+    });
+  }
+  
+  res.json({ received: true });
+});
+```
+</Step>
+
+<Step title="Update payment method">
+When the customer is ready to update their payment method, call the Update Payment Method API:
+
+<CodeGroup>
+```javascript Node.js
+// Update with new payment method
+const response = await client.subscriptions.updatePaymentMethod(subscriptionId, {
+  type: 'new',
+  return_url: 'https://example.com/return'
+});
+
+// For on_hold subscriptions, a charge is automatically created
+if (response.payment_id) {
+  console.log('Charge created for remaining dues:', response.payment_id);
+  // Redirect customer to response.payment_link to complete payment
+}
+```
+
+```python Python
+# Update with new payment method
+response = client.subscriptions.update_payment_method(
+    subscription_id=subscription_id,
+    type="new",
+    return_url="https://example.com/return"
+)
+
+# For on_hold subscriptions, a charge is automatically created
+if response.payment_id:
+    print("Charge created for remaining dues:", response.payment_id)
+    # Redirect customer to response.payment_link to complete payment
+```
+</CodeGroup>
+
+<Info>
+You can also use an existing payment method ID if the customer has saved payment methods:
+```javascript
+await client.subscriptions.updatePaymentMethod(subscriptionId, {
+  type: 'existing',
+  payment_method_id: 'pm_abc123'
+});
+```
+</Info>
+</Step>
+
+<Step title="Monitor webhook events">
+After updating the payment method, monitor for these webhook events:
+
+1. **`payment.succeeded`** - The charge for remaining dues was successful
+2. **`subscription.active`** - The subscription has been reactivated
+
+```javascript
+if (event.type === 'payment.succeeded') {
+  const payment = event.data;
+  
+  // Check if this payment is for an on_hold subscription
+  if (payment.subscription_id) {
+    // Wait for subscription.active webhook to confirm reactivation
+  }
+}
+
+if (event.type === 'subscription.active') {
+  const subscription = event.data;
+  
+  // Update subscription status in your database
+  await updateSubscriptionStatus(subscription.subscription_id, 'active');
+  
+  // Restore customer access
+  await restoreCustomerAccess(subscription.customer_id);
+  
+  // Notify customer of successful reactivation
+  await sendEmailToCustomer(subscription.customer_id, {
+    subject: 'Subscription Reactivated',
+    message: 'Your subscription has been reactivated successfully.'
+  });
+}
+```
+</Step>
+</Steps>
 
 ### Sample Subscription event payload
 

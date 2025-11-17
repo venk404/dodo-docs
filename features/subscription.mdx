@@ -220,6 +220,56 @@ await client.subscriptions.changePlan('sub_123', {
 Plan changes trigger immediate charges. Failed charges may move the subscription to `on_hold` status. Track changes via `subscription.plan_changed` webhook events.
 </Info>
 
+## Subscription States
+
+Subscriptions can be in different states throughout their lifecycle:
+
+- **`active`**: Subscription is active and will renew automatically
+- **`on_hold`**: Subscription is paused due to failed payment. Payment method update required to reactivate
+- **`cancelled`**: Subscription is cancelled and will not renew
+- **`expired`**: Subscription has reached its end date
+- **`pending`**: Subscription is being created or processed
+
+### On Hold State
+
+A subscription enters `on_hold` state when:
+
+- A renewal payment fails (insufficient funds, expired card, etc.)
+- A plan change charge fails
+- Payment method authorization fails
+
+<Warning>
+When a subscription is in `on_hold` state, it will not renew automatically. You must update the payment method to reactivate the subscription.
+</Warning>
+
+### Reactivating from On Hold
+
+To reactivate a subscription from `on_hold` state, update the payment method. This automatically:
+
+1. Creates a charge for remaining dues
+2. Generates an invoice
+3. Processes the payment using the new payment method
+4. Reactivates the subscription to `active` state upon successful payment
+
+```typescript
+// Reactivate subscription from on_hold
+const response = await client.subscriptions.updatePaymentMethod('sub_123', {
+  type: 'new',
+  return_url: 'https://example.com/return'
+});
+
+// For on_hold subscriptions, a charge is automatically created
+if (response.payment_id) {
+  console.log('Charge created:', response.payment_id);
+  // Redirect customer to response.payment_link to complete payment
+  // Monitor webhooks for payment.succeeded and subscription.active
+}
+```
+
+<Info>
+After successfully updating the payment method for an `on_hold` subscription, you'll receive `payment.succeeded` followed by `subscription.active` webhook events.
+</Info>
+
 ## API Management
 
 <AccordionGroup>
@@ -268,6 +318,14 @@ Fetch recorded usage for metered or hybrid pricing models.
 
 <Card title="API Reference" icon="code" href="/api-reference/subscriptions/get-usage-history">
 See usage history API.
+</Card>
+</Accordion>
+
+<Accordion title="Update payment method">
+Update the payment method for a subscription. For active subscriptions, this updates the payment method for future renewals. For subscriptions in `on_hold` state, this reactivates the subscription by creating a charge for remaining dues.
+
+<Card title="API Reference" icon="code" href="/api-reference/subscriptions/update-payment-method">
+Learn how to update payment methods and reactivate subscriptions.
 </Card>
 </Accordion>
 </AccordionGroup>
@@ -331,6 +389,40 @@ await client.subscriptions.createCharge(onDemand.id, {
   currency: 'USD',
   description: 'Extra usage for September'
 });
+```
+
+### Update payment method for active subscription
+Update the payment method for an active subscription:
+
+```typescript
+// Update with new payment method
+const response = await client.subscriptions.updatePaymentMethod('sub_123', {
+  type: 'new',
+  return_url: 'https://example.com/return'
+});
+
+// Or use existing payment method
+await client.subscriptions.updatePaymentMethod('sub_123', {
+  type: 'existing',
+  payment_method_id: 'pm_abc123'
+});
+```
+
+### Reactivate subscription from on_hold
+Reactivate a subscription that went on hold due to failed payment:
+
+```typescript
+// Update payment method - automatically creates charge for remaining dues
+const response = await client.subscriptions.updatePaymentMethod('sub_123', {
+  type: 'new',
+  return_url: 'https://example.com/return'
+});
+
+if (response.payment_id) {
+  // Charge created for remaining dues
+  // Redirect customer to response.payment_link
+  // Monitor webhooks: payment.succeeded → subscription.active
+}
 ```
 
 ## Best Practices

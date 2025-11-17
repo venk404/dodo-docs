@@ -546,6 +546,107 @@ Resolve typical problems encountered during subscription plan changes:
 - Implement retry logic for temporary failures
 - Consider allowing plan changes with failed immediate charges
 </Accordion>
+
+<Accordion title="Subscription on hold after plan change">
+**Symptoms**: Plan change charge fails and subscription moves to `on_hold` state
+
+**What happens**:
+When a plan change charge fails, the subscription is automatically placed in `on_hold` state. The subscription will not renew automatically until the payment method is updated.
+
+**Solution**: Update the payment method to reactivate the subscription
+
+To reactivate a subscription from `on_hold` state after a failed plan change:
+
+1. **Update the payment method** using the Update Payment Method API
+2. **Automatic charge creation**: The API automatically creates a charge for remaining dues
+3. **Invoice generation**: An invoice is generated for the charge
+4. **Payment processing**: The payment is processed using the new payment method
+5. **Reactivation**: Upon successful payment, the subscription is reactivated to `active` state
+
+<CodeGroup>
+```javascript Node.js
+// Reactivate subscription from on_hold after failed plan change
+async function reactivateAfterFailedPlanChange(subscriptionId) {
+  // Update payment method - automatically creates charge for remaining dues
+  const response = await client.subscriptions.updatePaymentMethod(subscriptionId, {
+    type: 'new',
+    return_url: 'https://example.com/return'
+  });
+  
+  if (response.payment_id) {
+    console.log('Charge created for remaining dues:', response.payment_id);
+    console.log('Payment link:', response.payment_link);
+    
+    // Redirect customer to payment_link to complete payment
+    // Monitor webhooks for:
+    // 1. payment.succeeded - charge succeeded
+    // 2. subscription.active - subscription reactivated
+  }
+  
+  return response;
+}
+
+// Or use existing payment method if available
+async function reactivateWithExistingPaymentMethod(subscriptionId, paymentMethodId) {
+  const response = await client.subscriptions.updatePaymentMethod(subscriptionId, {
+    type: 'existing',
+    payment_method_id: paymentMethodId
+  });
+  
+  // Monitor webhooks for payment.succeeded and subscription.active
+  return response;
+}
+```
+
+```python Python
+# Reactivate subscription from on_hold after failed plan change
+def reactivate_after_failed_plan_change(subscription_id):
+    # Update payment method - automatically creates charge for remaining dues
+    response = client.subscriptions.update_payment_method(
+        subscription_id=subscription_id,
+        type="new",
+        return_url="https://example.com/return"
+    )
+    
+    if response.payment_id:
+        print("Charge created for remaining dues:", response.payment_id)
+        print("Payment link:", response.payment_link)
+        
+        # Redirect customer to payment_link to complete payment
+        # Monitor webhooks for:
+        # 1. payment.succeeded - charge succeeded
+        # 2. subscription.active - subscription reactivated
+    
+    return response
+
+# Or use existing payment method if available
+def reactivate_with_existing_payment_method(subscription_id, payment_method_id):
+    response = client.subscriptions.update_payment_method(
+        subscription_id=subscription_id,
+        type="existing",
+        payment_method_id=payment_method_id
+    )
+    
+    # Monitor webhooks for payment.succeeded and subscription.active
+    return response
+```
+</CodeGroup>
+
+**Webhook events to monitor**:
+- `subscription.on_hold`: Subscription placed on hold (received when plan change charge fails)
+- `payment.succeeded`: Payment for remaining dues succeeded (after updating payment method)
+- `subscription.active`: Subscription reactivated after successful payment
+
+**Best practices**:
+- Notify customers immediately when a plan change charge fails
+- Provide clear instructions on how to update their payment method
+- Monitor webhook events to track reactivation status
+- Consider implementing automatic retry logic for temporary payment failures
+
+<Card title="Update Payment Method API Reference" icon="code" href="/api-reference/subscriptions/update-payment-method">
+View the complete API documentation for updating payment methods and reactivating subscriptions.
+</Card>
+</Accordion>
 </AccordionGroup>
 
 ## Testing Your Implementation

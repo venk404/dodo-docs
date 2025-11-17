@@ -78,7 +78,7 @@
                 ]
               },
               {
-                "group": "Benefits",
+                "group": "Entitlements",
                 "icon": "gift",
                 "pages": [
                   "features/license-keys",
@@ -304,23 +304,23 @@
             "group": "Payments",
             "pages": [
               "api-reference/payments/get-payments",
-              "api-reference/payments/post-payments",
               "api-reference/payments/get-payments-1",
               "api-reference/payments/get-invoice",
-              "api-reference/payments/retrieve-line-items"
+              "api-reference/payments/retrieve-line-items",
+              "api-reference/payments/post-payments"
             ]
           },
           {
             "group": "Subscriptions",
             "pages": [
               "api-reference/subscriptions/get-subscriptions-1",
-              "api-reference/subscriptions/post-subscriptions",
               "api-reference/subscriptions/get-subscriptions",
               "api-reference/subscriptions/change-plan",
               "api-reference/subscriptions/patch-subscriptions",
               "api-reference/subscriptions/create-charge",
               "api-reference/subscriptions/get-usage-history",
-              "api-reference/subscriptions/update-payment-method"
+              "api-reference/subscriptions/update-payment-method",
+              "api-reference/subscriptions/post-subscriptions"
             ]
           },
           {

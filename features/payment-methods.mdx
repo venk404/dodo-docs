@@ -343,6 +343,92 @@ Adding a payment method to `allowed_payment_method_types` doesn't guarantee it w
 
 **Solution:** This is expected behavior. Do not activate benefits or credits until payment confirmation is received via webhooks.
 </Accordion>
+
+<Accordion title="Updating payment methods for subscriptions">
+**When to update payment methods:**
+- Customer's card expires or is replaced
+- Customer wants to use a different payment method
+- Subscription is in `on_hold` state due to failed payment
+- Payment method needs to be changed for any reason
+
+**For active subscriptions:**
+Updating the payment method for an active subscription simply updates the payment method for future renewals. No immediate charge is created.
+
+**For on_hold subscriptions:**
+When a subscription is in `on_hold` state (due to failed renewal or failed plan change charge), updating the payment method will:
+- Automatically create a charge for remaining dues
+- Generate an invoice for the charge
+- Process the payment using the new payment method
+- Reactivate the subscription to `active` state upon successful payment
+
+<CodeGroup>
+```javascript Node.js
+// Update payment method for active subscription
+await client.subscriptions.updatePaymentMethod('sub_123', {
+  type: 'new',
+  return_url: 'https://example.com/return'
+});
+
+// Or use existing payment method
+await client.subscriptions.updatePaymentMethod('sub_123', {
+  type: 'existing',
+  payment_method_id: 'pm_abc123'
+});
+
+// For on_hold subscription - automatically creates charge
+const response = await client.subscriptions.updatePaymentMethod('sub_123', {
+  type: 'new',
+  return_url: 'https://example.com/return'
+});
+
+if (response.payment_id) {
+  // Charge created for remaining dues
+  // Redirect customer to response.payment_link
+  // Monitor webhooks: payment.succeeded → subscription.active
+}
+```
+
+```python Python
+# Update payment method for active subscription
+client.subscriptions.update_payment_method(
+    subscription_id="sub_123",
+    type="new",
+    return_url="https://example.com/return"
+)
+
+# Or use existing payment method
+client.subscriptions.update_payment_method(
+    subscription_id="sub_123",
+    type="existing",
+    payment_method_id="pm_abc123"
+)
+
+# For on_hold subscription - automatically creates charge
+response = client.subscriptions.update_payment_method(
+    subscription_id="sub_123",
+    type="new",
+    return_url="https://example.com/return"
+)
+
+if response.payment_id:
+    # Charge created for remaining dues
+    # Redirect customer to response.payment_link
+    # Monitor webhooks: payment.succeeded → subscription.active
+```
+</CodeGroup>
+
+**Webhook events:**
+- For `on_hold` subscriptions: You'll receive `payment.succeeded` followed by `subscription.active` after successful payment method update
+- Monitor these events to track subscription reactivation status
+
+<Card title="Update Payment Method API Reference" icon="code" href="/api-reference/subscriptions/update-payment-method">
+View the complete API documentation for updating payment methods.
+</Card>
+
+<Card title="Subscription States" icon="info-circle" href="/features/subscription">
+Learn more about subscription states including active and on_hold.
+</Card>
+</Accordion>
 </AccordionGroup>
 
 ## Expanding Payment Options
