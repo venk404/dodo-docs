@@ -208,7 +208,8 @@
                 ]
               },
               "developer-resources/billingsdk",
-              "developer-resources/mcp-server"
+              "developer-resources/mcp-server",
+              "developer-resources/dodo-sync"
             ]
           },
           {
